@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos Agotados</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #8fa7c2, #6f8fb5);
+}
+
+.navbar {
+  background-color: rgba(111, 143, 179, 0.95);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-right: 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #dce8f5;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  text-align: center;
+  margin: 15px;
+}
+
+.titulo span {
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  padding: 12px 35px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.search {
+  width: 320px;
+  margin: auto;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.search input {
+  border: none;
+  width: 100%;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 90%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+th {
+  background: #355c8a;
+  color: white;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.estado {
+  margin-left: 10px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.form-box {
+  width: 400px;
+  margin: 20px auto;
+  background: rgba(94, 127, 166, 0.95);
+  padding: 20px;
+  border-radius: 18px;
+  color: white;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.form-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>
+    <a href="#">Inicio</a>
+    <a href="#">Productos</a>
+    <a href="#">Inventario</a>
+    <a href="#">Ventas</a>
+    <a href="#">Proveedores</a>
+    <a href="#">Reportes</a>
+    <a href="#">Usuarios</a>
+    <a href="#">Configuración</a>
+  </div>
+
+  <img src="img/LogoPharmatodo.jpeg" class="logo">
+</div>
+
+<div class="titulo">
+  <span>Productos Agotados</span>
+</div>
+
+<div class="search">
+  <input type="text" placeholder="Buscar producto...">
+</div>
+
+<table>
+  <tr>
+    <th>Producto</th>
+    <th>Stock</th>
+    <th>Estado</th>
+    <th>Seleccionar</th>
+  </tr>
+
+  <tr>
+    <td>Dolex 500mg</td>
+    <td>0</td>
+    <td>Agotado</td>
+    <td>
+      <input type="checkbox" onchange="marcar(this)">
+      <span class="estado">No marcado</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Ibuprofeno 400</td>
+    <td>3</td>
+    <td>Bajo stock</td>
+    <td>
+      <input type="checkbox" onchange="marcar(this)">
+      <span class="estado">No marcado</span>
+    </td>
+  </tr>
+</table>
+
+<div class="form-box">
+  Producto seleccionado:
+  <input type="text">
+
+  Motivo (opcional):
+  <input type="text">
+
+  Fecha de marcación:
+  <input type="date">
+</div>
+
+<script>
+function marcar(checkbox) {
+  const estado = checkbox.parentElement.querySelector('.estado');
+
+  if (checkbox.checked) {
+    estado.textContent = "✔ Marcado";
+    estado.style.color = "#b8ffb8";
+  } else {
+    estado.textContent = "No marcado";
+    estado.style.color = "white";
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Pedidos de Reabastecimiento</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #8fa7c2, #6f8fb5);
+}
+
+.navbar {
+  background-color: rgba(111, 143, 179, 0.95);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+  color: white;
+  margin-right: 18px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #dce8f5;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  text-align: center;
+  margin: 15px;
+}
+
+.titulo span {
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  padding: 12px 35px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.contenedor {
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 300px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #355c8a;
+  color: white;
+}
+
+.btn-agregar, .btn-eliminar {
+  cursor: pointer;
+  color: #e0ecff;
+  text-decoration: underline;
+  font-weight: bold;
+  background: none;
+  border: none;
+  font-size: 14px;
+}
+
+.pedido-info {
+  background: rgba(94, 127, 166, 0.95);
+  border-radius: 18px;
+  color: white;
+  padding: 20px;
+  flex: 1 1 320px;
+  min-width: 320px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.pedido-info label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 12px;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.btn-enviar {
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  float: right;
+  transition: 0.3s;
+}
+
+.btn-enviar:hover {
+  transform: scale(1.05);
+}
+
+.separador {
+  border-left: 2px solid rgba(255,255,255,0.3);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>
+    <a href="#">Inicio</a>
+    <a href="#">Productos</a>
+    <a href="#">Inventario</a>
+    <a href="#">Ventas</a>
+    <a href="#">Proveedores</a>
+    <a href="#">Reportes</a>
+    <a href="#">Usuarios</a>
+    <a href="#">Configuración</a>
+  </div>
+
+  <img src="img/LogoPharmatodo.jpeg" class="logo" />
+</div>
+
+<div class="titulo">
+  <span>Pedidos de reabastecimiento</span>
+</div>
+
+<div class="contenedor">
+
+  <div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Stock</th>
+          <th>Proveedor</th>
+          <th>Seleccionar</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>Dolex 500mg</td>
+          <td>15</td>
+          <td>GSK</td>
+          <td><button class="btn-agregar" onclick="agregarProducto('Dolex 500mg', 'GSK')">[Agregar]</button></td>
+        </tr>
+
+        <tr>
+          <td>Ibuprofeno 400</td>
+          <td>8</td>
+          <td>Bayer</td>
+          <td><button class="btn-agregar" onclick="agregarProducto('Ibuprofeno 400', 'Bayer')">[Agregar]</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div class="separador"></div>
+
+  <div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Proveedor</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+
+      <tbody id="carrito-body"></tbody>
+    </table>
+
+    <label>Nota del pedido:</label>
+    <input type="text" id="notaPedido" />
+
+    <div class="pedido-info">
+      <div>Proveedor: <span id="proveedorSeleccionado">Ninguno</span></div>
+
+      <label>Tiempo de entrega:</label>
+      <input type="number" id="tiempoEntrega" />
+
+      <label>Teléfono:</label>
+      <input type="text" id="telefonoContacto" />
+
+      <button class="btn-enviar" onclick="enviarPedido()">Enviar pedido</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const carrito = [];
+let proveedorActual = null;
+
+function agregarProducto(producto, proveedor) {
+  const existe = carrito.find(p => p.producto === producto);
+  if (existe) return alert('Ya está en el carrito');
+
+  carrito.push({ producto, cantidad: 1, proveedor });
+  proveedorActual = proveedor;
+  actualizarCarrito();
+}
+
+function actualizarCarrito() {
+  const tbody = document.getElementById('carrito-body');
+  tbody.innerHTML = '';
+
+  carrito.forEach((item, i) => {
+
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${item.producto}</td>
+      <td>
+        <select onchange="carrito[${i}].cantidad = this.value">
+          ${Array.from({length:100}, (_,k)=>`<option ${k+1===item.cantidad?'selected':''}>${k+1}</option>`).join('')}
+        </select>
+      </td>
+      <td>${item.proveedor}</td>
+      <td><button class="btn-eliminar" onclick="carrito.splice(${i},1); actualizarCarrito()">[x]</button></td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('proveedorSeleccionado').textContent =
+    proveedorActual || 'Ninguno';
+}
+
+function enviarPedido() {
+  if (carrito.length === 0) return alert('Carrito vacío');
+
+  alert('Pedido enviado correctamente');
+}
+
+</script>
+
+</body>
+</html>

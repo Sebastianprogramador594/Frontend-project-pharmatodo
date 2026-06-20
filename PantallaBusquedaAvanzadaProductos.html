@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Búsqueda Avanzada de Productos</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #8fa7c2, #6f8fb5);
+}
+
+.navbar {
+  background-color: rgba(111, 143, 179, 0.95);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+  color: white;
+  margin-right: 18px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #dce8f5;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  text-align: center;
+  margin: 15px;
+}
+
+.titulo span {
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  padding: 12px 35px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.container {
+  padding: 20px;
+}
+
+.fila {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(94, 127, 166, 0.95);
+  padding: 20px;
+  border-radius: 18px;
+  color: white;
+  flex: 1;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  transition: 0.3s;
+}
+
+.search-container {
+  flex: 1;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  background: white;
+}
+
+input, select {
+  width: 100%;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.botonera {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.botonera button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.botonera button:hover {
+  transform: scale(1.05);
+}
+
+table {
+  width: 100%;
+  background: white;
+  color: black;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #355c8a;
+  color: white;
+}
+
+.floating-export {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.floating-export button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: linear-gradient(135deg, #6f8fb5, #4b6fa8);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.floating-export button:hover {
+  transform: scale(1.05);
+}
+
+.producto-img-Dolex {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>
+    <a href="#">Inicio</a>
+    <a href="#">Productos</a>
+    <a href="#">Inventario</a>
+    <a href="#">Ventas</a>
+    <a href="#">Proveedores</a>
+    <a href="#">Reportes</a>
+    <a href="#">Usuarios</a>
+    <a href="#">Configuración</a>
+  </div>
+
+  <img src="img/LogoPharmatodo.jpeg" class="logo">
+</div>
+
+<div class="titulo">
+  <span>Búsqueda Avanzada de Productos</span>
+</div>
+
+<div class="container">
+
+  <div class="fila">
+
+    <div class="search-container">
+      <input type="search" placeholder="🔍 Buscar producto por nombre...">
+    </div>
+
+    <div class="card">
+
+      <strong>Filtros de búsqueda</strong>
+
+      Categoría
+      <select>
+        <option>Seleccionar</option>
+        <option>Analgésico</option>
+        <option>Antibiótico</option>
+      </select>
+
+      Composición
+      <select>
+        <option>Acetaminofén</option>
+        <option>Ibuprofeno</option>
+      </select>
+
+      Fabricante
+      <select>
+        <option>GSK</option>
+        <option>Pfizer</option>
+      </select>
+
+      <div class="botonera">
+        <button onclick="aplicarFiltros()">Aplicar filtros</button>
+        <button onclick="limpiarFiltros()">Limpiar</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="fila">
+
+    <div class="card">
+      <table>
+        <tr>
+          <th>Imagen</th>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th>Composición</th>
+          <th>Fabricante</th>
+          <th>Stock</th>
+          <th>Ver detalles</th>
+        </tr>
+
+        <tr>
+          <td><img src="img/Dolex.jpeg" class="producto-img-Dolex"> </td>
+          <td>Dolex 500mg</td>
+          <td>Analgésico</td>
+          <td>Acetaminofén</td>
+          <td>GSK</td>
+          <td>45</td>
+          <td>...</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="floating-export">
+  <button onclick="exportarResultados()">Exportar resultados</button>
+</div>
+
+<script>
+
+function aplicarFiltros() {
+  alert("Aplicando filtros...");
+}
+
+function limpiarFiltros() {
+  alert("Limpiando filtros...");
+}
+
+function exportarResultados() {
+  alert("Exportando resultados...");
+}
+
+</script>
+
+</body>
+</html>

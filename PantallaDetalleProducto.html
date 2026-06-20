@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Detalle Producto</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #8fa7c2, #6f8fb5);
+}
+
+
+.navbar {
+  background-color: rgba(111, 143, 179, 0.95);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+  color: white;
+  margin-right: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #dce8f5;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  text-align: center;
+  margin: 15px;
+}
+
+.titulo span {
+  background-color: #3d5a80;
+  padding: 10px 30px;
+  border-radius: 20px;
+  color: white;
+}
+
+.container {
+  display: flex;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 35%;
+}
+
+.box {
+  background: rgba(94, 127, 166, 0.95);
+  color: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  line-height: 1.8;
+  transition: 0.3s;
+}
+
+.box:hover {
+  transform: translateY(-3px);
+}
+
+.content {
+  width: 65%;
+  padding-left: 20px;
+}
+
+.section {
+  margin-bottom: 15px;
+}
+
+.section-box {
+  background: rgba(94, 127, 166, 0.95);
+  padding: 20px;
+  border-radius: 18px;
+  color: white;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  line-height: 1.8;
+  transition: 0.3s;
+}
+
+.section-box:hover {
+  transform: translateY(-3px);
+}
+
+.row {
+  display: flex;
+  gap: 15px;
+}
+
+.row .section-box {
+  flex: 1;
+}
+
+h3 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.producto-img-Acetaminofen {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>
+    <a href="#">Inicio</a> 
+    <a href="#">Productos</a> 
+    <a href="#">Inventario</a> 
+    <a href="#">Ventas</a> 
+    <a href="#">Proveedores</a> 
+    <a href="#">Reportes</a> 
+    <a href="#">Usuarios</a> 
+    <a href="#">Configuración</a>
+  </div>
+    <img src="img/LogoPharmatodo.jpeg" alt="Logo Pharmatodo" class="logo">
+</div>
+
+<div class="titulo">
+  <span>Detalles del Producto</span>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+    <p><b>Encabezado del producto</b></p>
+
+    <div class="box">
+      Nombre: Acetaminofen 500mg <br>
+      <img src="img/Acetaminofen.jpeg" class="producto-img-Acetaminofen"> <br>
+      Código/Referencia: ACF-500 <br>
+      Categoría: Analgésicos <br>
+      Marca: Genfar
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <h3>Descripción completa</h3>
+      <div class="section-box">
+       Analgésico de uso general para el alivio del dolor leve y la reducción de la fiebre. Presentación en tabletas.
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="section-box">
+        <h3>Informacion adicional</h3>
+        Presentación: Caja x 24 tabletas <br>
+        Concentración: 500 mg <br>
+        Instrucciones: Tomar 1 tableta cada 8 horas <br>
+        Contraindicaciones: Hipersensibilidad al acetaminofén <br>
+        Proveedor: Farmacéutica Genfar S.A
+      </div>
+
+      <div class="section-box">
+        <h3>Disponibilidad y lotes</h3>
+        Stock actual: 72 unidades <br>
+        ✔ Lote L-ACF-2024-01 (Vence: 12/03/2026) <br>
+        ✔ Lote L-ACF-2023-05 (Vence: 18/11/2025) <br>
+        ✔ Lote L-ACF-2023-01 (Vence: 02/08/2025)
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Productos - Pharmatodo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #8fa7c2, #6f8fb5);
+}
+
+.navbar {
+  background-color: rgba(111, 143, 179, 0.95);
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar a {
+  color: white;
+  margin-right: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: #dce8f5;
+}
+
+.logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+}
+
+.titulo {
+  text-align: center;
+  margin: 15px;
+}
+
+.titulo span {
+  background: linear-gradient(135deg, #355c8a, #27496d);
+  padding: 12px 35px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.container {
+  display: flex;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 35%;
+}
+
+.search {
+  background: rgba(255,255,255,0.95);
+  padding: 12px 18px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.search input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
+}
+
+.filtros {
+  background: rgba(94, 127, 166, 0.95);
+  padding: 20px;
+  margin-top: 15px;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  line-height: 2;
+}
+
+.content {
+  width: 65%;
+  padding-left: 20px;
+  padding-left: 25px;
+}
+
+.card {
+  background: rgba(94, 127, 166, 0.95);
+  color: white;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card small {
+  display: block;
+}
+
+.btn-detalles {
+  margin-top: 10px;
+  background: white;
+  color: #355c8a;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-detalles2 {
+  margin-top: 10px;
+  background: white;
+  color: #355c8a;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.producto-img-Acetaminofen {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.info-derecha {
+  text-align: right;
+}
+
+.producto-img-JarabeParaTos {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div>
+    <a href="#">Inicio</a> 
+    <a href="#">Productos</a> 
+    <a href="#">Inventario</a> 
+    <a href="#">Ventas</a> 
+    <a href="#">Proveedores</a> 
+    <a href="#">Reportes</a> 
+    <a href="#">Usuarios</a> 
+    <a href="#">Configuración</a>
+  </div>
+
+    <img src="img/LogoPharmatodo.jpeg" alt="Logo Pharmatodo" class="logo">
+</div>
+
+<div class="titulo">
+  <span>Disponibilidad de Productos</span>
+</div>
+
+<div class="container">
+
+  <div class="sidebar">
+
+    <div class="search">
+      🔍 <input type="text" placeholder="Buscar producto por nombre, referencia o código...">
+    </div>
+
+    <p><b>Filtros Opcionales</b></p>
+
+    <div class="filtros">
+      Categoría: ▼ <br>
+      Marca: ▼ <br>
+      Estado: ▼ <br>
+      Ordenar por: Nombre ▲▼ <br>
+      Stock ▲▼ <br>
+      Categoría ▲▼
+    </div>
+
+  </div>
+
+  <div class="content">
+
+    <h3>Lista de Productos</h3>
+
+    <div class="card">
+      <div>
+        <img src="img/Acetaminofen.jpeg" class="producto-img-Acetaminofen">
+        <small>Código: ACF-500</small>
+        <small>Stock disponible: 72 unidades</small>
+        <small>Ubicación: Estante B - Pasillo 3</small>
+        <button class="btn-detalles">Ver detalles</button>
+      </div>
+
+      <div class="info-derecha">
+        Acetaminofén 500mg <br>
+        <small>Categoría: Analgésicos</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <div>
+        <img src="img/JarabeParaTos.jpeg" class="producto-img-JarabeParaTos">
+        <small>Código: JRX-200</small>
+        <small>Stock disponible: 12 unidades</small>
+        <small>Ubicación: Estante C - Pasillo 1</small>
+        <button class="btn-detalles2">Ver detalles</button>
+      </div>
+
+      <div>
+        Jarabe para la tos <br>
+        <small>Categoría: Respiratorios</small>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
