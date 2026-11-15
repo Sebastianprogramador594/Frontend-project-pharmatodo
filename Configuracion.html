@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmatodo - Configuración</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    color: #2f3e4d;
+}
+
+.navbar {
+    min-height: 75px;
+    background: linear-gradient(90deg, #8fa7c2, #6f8fb5);
+    display: flex;
+    align-items: center;
+    padding: 12px 35px;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: 45px;
+}
+
+.logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.logo-text {
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-links a:hover {
+    opacity: 0.75;
+}
+
+.nav-links a.active {
+    font-weight: 600;
+    border-bottom: 2px solid white;
+    padding-bottom: 4px;
+}
+
+.container {
+    padding: 35px 45px;
+}
+
+.header {
+    margin-bottom: 28px;
+}
+
+.header h1 {
+    font-size: 28px;
+    color: #34495e;
+}
+
+.header p {
+    margin-top: 5px;
+    color: #7b8794;
+    font-size: 14px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.option-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 22px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    transition: 0.2s;
+}
+
+.option-card:hover {
+    transform: translateY(-3px);
+}
+
+.option-card.active {
+    border-color: #6f8fb5;
+    background: #f8fbff;
+}
+
+.option-icon {
+    font-size: 27px;
+    margin-bottom: 12px;
+}
+
+.option-card h3 {
+    font-size: 14px;
+    color: #34495e;
+    margin-bottom: 7px;
+}
+
+.option-card p {
+    font-size: 11px;
+    color: #7b8794;
+    line-height: 1.6;
+}
+
+.panel {
+    display: none;
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.panel.active {
+    display: block;
+}
+
+.panel h2 {
+    color: #34495e;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.panel-description {
+    color: #7b8794;
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.info-item {
+    background: #f4f7fb;
+    border-radius: 9px;
+    padding: 16px;
+}
+
+.info-label {
+    font-size: 11px;
+    color: #8995a2;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.form-group {
+    margin-bottom: 17px;
+    max-width: 500px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #536273;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d7dee7;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #6f8fb5;
+}
+
+.help-text {
+    font-size: 11px;
+    color: #8995a2;
+    margin-top: 6px;
+}
+
+.btn-primary {
+    background: #6f8fb5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background: #5f7fa5;
+}
+
+.btn-secondary {
+    background: #edf1f5;
+    color: #526171;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.btn-danger {
+    background: #bd5555;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.message {
+    display: none;
+    padding: 11px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 13px;
+}
+
+.message.success {
+    display: block;
+    background: #e6f6ed;
+    color: #237b50;
+}
+
+.message.error {
+    display: block;
+    background: #fde8e8;
+    color: #b93636;
+}
+
+.system-note {
+    background: #f4f7fb;
+    padding: 17px;
+    border-radius: 9px;
+    font-size: 13px;
+    color: #657486;
+    line-height: 1.8;
+}
+
+.logout-warning {
+    background: #fff6e7;
+    color: #8c6725;
+    border-radius: 9px;
+    padding: 15px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar {
+        padding: 12px 20px;
+    }
+
+    .logo-container {
+        margin-right: 20px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 25px 18px;
+    }
+
+    .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="img/LogoPharmatodo.jpeg" class="logo" alt="Logo Pharmatodo">
+        <span class="logo-text">Pharmatodo</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Gestiondeproductos.html">Productos</a>
+        <a href="Inventario.html">Inventario</a>
+        <a href="Ventas.html">Ventas</a>
+        <a href="Proveedores.html">Proveedores</a>
+        <a href="Reportes.html">Reportes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Configuracion.html" class="active">Configuración</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <div class="header">
+        <h1>Configuración del sistema</h1>
+        <p>Administra tu cuenta y consulta la información general de Pharmatodo.</p>
+    </div>
+
+    <section class="cards">
+
+        <button class="option-card active" onclick="mostrarSeccion('sistema', this)">
+            <div class="option-icon">⚙️</div>
+            <h3>Información del sistema</h3>
+            <p>Consulta los datos generales de Pharmatodo.</p>
+        </button>
+
+        <button class="option-card" onclick="mostrarSeccion('cuenta', this)">
+            <div class="option-icon">👤</div>
+            <h3>Mi cuenta</h3>
+            <p>Consulta tu información personal y laboral.</p>
+        </button>
+
+        <button class="option-card" onclick="mostrarSeccion('seguridad', this)">
+            <div class="option-icon">🔒</div>
+            <h3>Seguridad</h3>
+            <p>Actualiza la contraseña de tu cuenta.</p>
+        </button>
+
+        <button class="option-card" onclick="mostrarSeccion('salir', this)">
+            <div class="option-icon">🚪</div>
+            <h3>Cerrar sesión</h3>
+            <p>Finaliza tu sesión de manera segura.</p>
+        </button>
+
+    </section>
+
+    <div id="mensaje" class="message"></div>
+
+    <section id="sistema" class="panel active">
+        <h2>Información del sistema</h2>
+        <p class="panel-description">Datos generales del software de gestión farmacéutica.</p>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Nombre del sistema</div>
+                <div class="info-value">Pharmatodo</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Tipo de software</div>
+                <div class="info-value">Sistema de gestión farmacéutica</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Versión</div>
+                <div class="info-value">1.0</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Estado</div>
+                <div class="info-value">Sistema operativo</div>
+            </div>
+        </div>
+
+        <div class="system-note" style="margin-top:20px;">
+            Pharmatodo permite gestionar productos, inventario, ventas,
+            proveedores y usuarios, facilitando la administración de los
+            procesos de una farmacia.
+        </div>
+    </section>
+
+    <section id="cuenta" class="panel">
+        <h2>Mi cuenta</h2>
+        <p class="panel-description">Información del usuario que inició sesión.</p>
+
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Nombre completo</div>
+                <div class="info-value" id="cuentaNombre">Cargando...</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Nombre de usuario</div>
+                <div class="info-value" id="cuentaUsuario">Cargando...</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Cargo</div>
+                <div class="info-value" id="cuentaCargo">Cargando...</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Horario</div>
+                <div class="info-value" id="cuentaHorario">Cargando...</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Rol del sistema</div>
+                <div class="info-value" id="cuentaRol">Cargando...</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="seguridad" class="panel">
+        <h2>Seguridad de la cuenta</h2>
+        <p class="panel-description">Cambia tu contraseña para mantener protegida tu cuenta.</p>
+
+        <form id="formPassword">
+
+            <div class="form-group">
+                <label for="passwordActual">Contraseña actual</label>
+                <input type="password" id="passwordActual" required>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordNueva">Nueva contraseña</label>
+                <input type="password" id="passwordNueva" minlength="8" required>
+                <p class="help-text">Debe contener mínimo 8 caracteres.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmarPassword">Confirmar nueva contraseña</label>
+                <input type="password" id="confirmarPassword" minlength="8" required>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Actualizar contraseña
+            </button>
+
+        </form>
+    </section>
+
+    <section id="salir" class="panel">
+        <h2>Cerrar sesión</h2>
+        <p class="panel-description">Finaliza tu acceso a Pharmatodo.</p>
+
+        <div class="logout-warning">
+            Al cerrar sesión, tendrás que ingresar nuevamente con tu usuario y contraseña.
+        </div>
+
+        <button class="btn-danger" onclick="cerrarSesion()">
+            Confirmar cierre de sesión
+        </button>
+
+        <button class="btn-secondary" onclick="mostrarSeccion('sistema', document.querySelector('.option-card'))">
+            Cancelar
+        </button>
+    </section>
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+const API_URL = "http://localhost:3000/api/auth/cambiar-password";
+
+const token = localStorage.getItem("tokenPharmatodo");
+
+let usuarioSesion = null;
+
+try {
+    usuarioSesion = JSON.parse(localStorage.getItem("usuarioPharmatodo"));
+} catch (error) {
+    usuarioSesion = null;
+}
+
+if (!token || !usuarioSesion) {
+    window.location.href = "PantallaLogin.html";
+}
+
+function mostrarSeccion(id, tarjeta) {
+    document.querySelectorAll(".panel").forEach(panel => {
+        panel.classList.remove("active");
+    });
+
+    document.querySelectorAll(".option-card").forEach(card => {
+        card.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    if (tarjeta) {
+        tarjeta.classList.add("active");
+    }
+
+    document.getElementById("mensaje").className = "message";
+    document.getElementById("mensaje").textContent = "";
+}
+
+function cargarCuenta() {
+    document.getElementById("cuentaNombre").textContent =
+        usuarioSesion.nombre || "No disponible";
+
+    document.getElementById("cuentaUsuario").textContent =
+        usuarioSesion.usuario || "No disponible";
+
+    document.getElementById("cuentaCargo").textContent =
+        usuarioSesion.cargo || "No disponible";
+
+    document.getElementById("cuentaHorario").textContent =
+        usuarioSesion.horario || "No disponible";
+
+    document.getElementById("cuentaRol").textContent =
+        usuarioSesion.rol || "No disponible";
+}
+
+function mostrarMensaje(texto, tipo) {
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.textContent = texto;
+    mensaje.className = `message ${tipo}`;
+}
+
+document.getElementById("formPassword").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const passwordActual = document.getElementById("passwordActual").value;
+    const passwordNueva = document.getElementById("passwordNueva").value;
+    const confirmarPassword = document.getElementById("confirmarPassword").value;
+
+    if (passwordNueva.length < 8) {
+        mostrarMensaje("La nueva contraseña debe tener mínimo 8 caracteres.", "error");
+        return;
+    }
+
+    if (passwordNueva !== confirmarPassword) {
+        mostrarMensaje("Las nuevas contraseñas no coinciden.", "error");
+        return;
+    }
+
+    if (passwordActual === passwordNueva) {
+        mostrarMensaje("La nueva contraseña debe ser diferente a la actual.", "error");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(API_URL, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                passwordActual,
+                passwordNueva
+            })
+        });
+
+        const resultado = await respuesta.json();
+
+        if (respuesta.status === 401 && resultado.mensaje === "Token inválido o expirado.") {
+            cerrarSesion();
+            return;
+        }
+
+        if (!respuesta.ok) {
+            mostrarMensaje(resultado.mensaje || "No se pudo actualizar la contraseña.", "error");
+            return;
+        }
+
+        mostrarMensaje(resultado.mensaje, "success");
+
+        document.getElementById("formPassword").reset();
+
+    } catch (error) {
+        console.error(error);
+        mostrarMensaje("No fue posible conectar con el servidor.", "error");
+    }
+});
+
+function cerrarSesion() {
+    const confirmar = confirm("¿Estás seguro de que deseas cerrar sesión?");
+
+    if (!confirmar) return;
+
+    localStorage.removeItem("tokenPharmatodo");
+    localStorage.removeItem("usuarioPharmatodo");
+
+    window.location.href = "PantallaLogin.html";
+}
+
+cargarCuenta();
+</script>
+
+</body>
+</html>

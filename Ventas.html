@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Ventas - Pharmatodo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    color: #34495e;
+}
+
+.navbar {
+    height: 75px;
+    background: linear-gradient(90deg, #8fa7c2, #6f8fb5);
+    padding: 0 30px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.brand-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 27px 0 22px;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    color: #eef4fa;
+}
+
+.nav-links a.active {
+    font-weight: 600;
+    border-bottom: 3px solid white;
+}
+
+.page-header {
+    padding: 30px 35px 10px;
+}
+
+.page-header h1 {
+    margin: 0;
+    color: #34495e;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.page-header p {
+    margin: 6px 0 0;
+    color: #7b8794;
+    font-size: 14px;
+}
+
+.container {
+    padding: 25px 35px 40px;
+}
+
+.ventas-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.card h2 {
+    margin: 0 0 20px;
+    color: #34495e;
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.card-subtitle {
+    margin: -12px 0 20px;
+    color: #7b8794;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #465665;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d7dee7;
+    border-radius: 8px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #34495e;
+    background: white;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+    border-color: #6f8fb5;
+    box-shadow: 0 0 0 3px rgba(111,143,181,0.12);
+}
+
+.product-info {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.info-item {
+    flex: 1;
+    background: #f4f7fb;
+    border-radius: 8px;
+    padding: 9px;
+    text-align: center;
+}
+
+.info-item span {
+    display: block;
+    color: #7b8794;
+    font-size: 11px;
+}
+
+.info-item strong {
+    display: block;
+    margin-top: 2px;
+    color: #34495e;
+    font-size: 13px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #6f8fb5;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #5f7fa5;
+    transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+    background: #b8c3ce;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f1f5f9;
+}
+
+th {
+    padding: 12px 10px;
+    color: #465665;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #edf1f5;
+    color: #465665;
+    font-size: 12px;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 35px 15px;
+    color: #7b8794;
+    font-size: 13px;
+}
+
+.btn-delete {
+    border: none;
+    background: #fde8e8;
+    color: #bd3e3e;
+    padding: 6px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.btn-delete:hover {
+    background: #f8d5d5;
+}
+
+.sale-total {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #e5eaf0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sale-total span {
+    color: #7b8794;
+    font-size: 14px;
+}
+
+.sale-total strong {
+    color: #34495e;
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.sale-actions {
+    margin-top: 18px;
+}
+
+.message {
+    display: none;
+    margin-bottom: 18px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.message.success {
+    display: block;
+    background: #e5f6ed;
+    color: #238b58;
+}
+
+.message.error {
+    display: block;
+    background: #fde8e8;
+    color: #bd3e3e;
+}
+
+.sale-status {
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 9px;
+    background: #f4f7fb;
+    display: none;
+}
+
+.sale-status strong {
+    display: block;
+    color: #34495e;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.sale-status span {
+    color: #7b8794;
+    font-size: 12px;
+}
+
+@media (max-width: 1000px) {
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .navbar-left {
+        gap: 15px;
+    }
+
+    .brand {
+        display: none;
+    }
+
+    .nav-links {
+        gap: 13px;
+    }
+
+    .ventas-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        height: auto;
+        min-height: 75px;
+        padding: 12px 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .nav-links a {
+        padding: 5px 0;
+    }
+
+    .navbar-logo {
+        display: none;
+    }
+
+    .page-header {
+        padding: 25px 20px 5px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="navbar-left">
+
+        <div class="brand">
+            <img src="img/LogoPharmatodo.jpeg" class="brand-logo">
+            <span>Pharmatodo</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="Dashboard.html">Inicio</a>
+            <a href="Gestiondeproductos.html">Productos</a>
+            <a href="Inventario.html">Inventario</a>
+            <a href="Ventas.html" class="active">Ventas</a>
+            <a href="Proveedores.html">Proveedores</a>
+            <a href="Reportes.html">Reportes</a>
+            <a href="Usuarios.html">Usuarios</a>
+            <a href="Configuracion.html">Configuración</a>
+        </div>
+
+    </div>
+
+</nav>
+
+<header class="page-header">
+    <h1>Gestión de Ventas</h1>
+    <p>Registra nuevas ventas, agrega medicamentos y controla el total de la operación.</p>
+</header>
+
+<main class="container">
+
+    <div id="mensaje" class="message"></div>
+
+    <div class="ventas-layout">
+
+        <section class="card">
+
+            <h2>Nueva venta</h2>
+
+            <p class="card-subtitle">
+                Ingresa los datos de la venta y agrega los medicamentos.
+            </p>
+
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <input
+                    type="text"
+                    id="cliente"
+                    placeholder="Nombre del cliente"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="metodoPago">Método de pago</label>
+
+                <select id="metodoPago">
+                    <option value="">Seleccionar método</option>
+                    <option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta">Tarjeta</option>
+                    <option value="Transferencia">Transferencia</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <label for="medicamento">Medicamento</label>
+
+                <select id="medicamento">
+                    <option value="">Seleccionar medicamento</option>
+                </select>
+
+                <div class="product-info">
+
+                    <div class="info-item">
+                        <span>Precio</span>
+                        <strong id="precio">$0</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Stock disponible</span>
+                        <strong id="stock">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="cantidad">Cantidad</label>
+
+                <input
+                    type="number"
+                    id="cantidad"
+                    min="1"
+                    value="1"
+                >
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-primary"
+                id="btnAgregar"
+            >
+                + Agregar medicamento
+            </button>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Resumen de la venta</h2>
+
+            <p class="card-subtitle">
+                Revisa los medicamentos antes de finalizar la venta.
+            </p>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Cant.</th>
+                            <th>Precio</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tablaVenta">
+
+                        <tr id="filaVacia">
+                            <td colspan="5" class="empty-message">
+                                No hay medicamentos agregados.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="sale-total">
+                <span>Total de la venta</span>
+                <strong id="totalVenta">$0</strong>
+            </div>
+
+            <div class="sale-actions">
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    id="btnFinalizar"
+                    disabled
+                >
+                    Finalizar venta
+                </button>
+
+            </div>
+
+            <div id="saleStatus" class="sale-status">
+                <strong>Venta registrada</strong>
+                <span id="saleStatusText"></span>
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+
+const API_URL = "http://localhost:3000/api";
+
+let medicamentos = [];
+let productosVenta = [];
+
+const clienteInput = document.getElementById("cliente");
+const metodoPagoSelect = document.getElementById("metodoPago");
+const medicamentoSelect = document.getElementById("medicamento");
+const cantidadInput = document.getElementById("cantidad");
+const precioElement = document.getElementById("precio");
+const stockElement = document.getElementById("stock");
+const btnAgregar = document.getElementById("btnAgregar");
+const btnFinalizar = document.getElementById("btnFinalizar");
+const tablaVenta = document.getElementById("tablaVenta");
+const totalVentaElement = document.getElementById("totalVenta");
+const mensajeElement = document.getElementById("mensaje");
+const saleStatus = document.getElementById("saleStatus");
+const saleStatusText = document.getElementById("saleStatusText");
+
+async function cargarMedicamentos() {
+
+    try {
+
+        const respuesta = await fetch(`${API_URL}/medicamentos`);
+
+        if (!respuesta.ok) {
+            throw new Error("No se pudieron consultar los medicamentos");
+        }
+
+        medicamentos = await respuesta.json();
+
+        medicamentoSelect.innerHTML = `
+            <option value="">Seleccionar medicamento</option>
+        `;
+
+        medicamentos.forEach(medicamento => {
+
+            const option = document.createElement("option");
+
+            option.value = medicamento.ID;
+            option.textContent = `${medicamento.NOMBRE} - $${formatearNumero(medicamento.PRECIO)}`;
+
+            medicamentoSelect.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        mostrarMensaje(
+            "No se pudieron cargar los medicamentos.",
+            "error"
+        );
+
+    }
+
+}
+
+medicamentoSelect.addEventListener("change", () => {
+
+    const id = Number(medicamentoSelect.value);
+
+    const medicamento = medicamentos.find(item => Number(item.ID) === id);
+
+    if (!medicamento) {
+
+        precioElement.textContent = "$0";
+        stockElement.textContent = "0";
+
+        return;
+    }
+
+    precioElement.textContent = `$${formatearNumero(medicamento.PRECIO)}`;
+    stockElement.textContent = medicamento.STOCK;
+
+    cantidadInput.value = 1;
+    cantidadInput.max = medicamento.STOCK;
+
+});
+
+btnAgregar.addEventListener("click", () => {
+
+    ocultarMensaje();
+
+    const id = Number(medicamentoSelect.value);
+    const cantidad = Number(cantidadInput.value);
+
+    if (!id) {
+        mostrarMensaje(
+            "Selecciona un medicamento.",
+            "error"
+        );
+        return;
+    }
+
+    if (!cantidad || cantidad <= 0) {
+        mostrarMensaje(
+            "Ingresa una cantidad válida.",
+            "error"
+        );
+        return;
+    }
+
+    const medicamento = medicamentos.find(item => Number(item.ID) === id);
+
+    if (!medicamento) {
+        mostrarMensaje(
+            "No se encontró el medicamento seleccionado.",
+            "error"
+        );
+        return;
+    }
+
+    const existente = productosVenta.find(
+        item => Number(item.MEDICAMENTO_ID) === id
+    );
+
+    const cantidadTotal = existente
+        ? existente.CANTIDAD + cantidad
+        : cantidad;
+
+    if (cantidadTotal > Number(medicamento.STOCK)) {
+
+        mostrarMensaje(
+            `Stock insuficiente para ${medicamento.NOMBRE}. Disponible: ${medicamento.STOCK}.`,
+            "error"
+        );
+
+        return;
+    }
+
+    if (existente) {
+
+        existente.CANTIDAD = cantidadTotal;
+
+    } else {
+
+        productosVenta.push({
+            MEDICAMENTO_ID: medicamento.ID,
+            NOMBRE: medicamento.NOMBRE,
+            PRECIO: Number(medicamento.PRECIO),
+            CANTIDAD: cantidad
+        });
+
+    }
+
+    renderizarVenta();
+
+    medicamentoSelect.value = "";
+    cantidadInput.value = 1;
+    precioElement.textContent = "$0";
+    stockElement.textContent = "0";
+
+});
+
+function renderizarVenta() {
+
+    if (productosVenta.length === 0) {
+
+        tablaVenta.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-message">
+                    No hay medicamentos agregados.
+                </td>
+            </tr>
+        `;
+
+        totalVentaElement.textContent = "$0";
+        btnFinalizar.disabled = true;
+
+        return;
+    }
+
+    tablaVenta.innerHTML = "";
+
+    let total = 0;
+
+    productosVenta.forEach((producto, index) => {
+
+        const subtotal = producto.PRECIO * producto.CANTIDAD;
+
+        total += subtotal;
+
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${producto.NOMBRE}</td>
+            <td>${producto.CANTIDAD}</td>
+            <td>$${formatearNumero(producto.PRECIO)}</td>
+            <td>$${formatearNumero(subtotal)}</td>
+            <td>
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="eliminarProducto(${index})"
+                >
+                    Eliminar
+                </button>
+            </td>
+        `;
+
+        tablaVenta.appendChild(fila);
+
+    });
+
+    totalVentaElement.textContent = `$${formatearNumero(total)}`;
+
+    btnFinalizar.disabled = false;
+
+}
+
+function eliminarProducto(index) {
+
+    productosVenta.splice(index, 1);
+
+    renderizarVenta();
+
+}
+
+btnFinalizar.addEventListener("click", async () => {
+
+    ocultarMensaje();
+    saleStatus.style.display = "none";
+
+    const cliente = clienteInput.value.trim();
+    const metodoPago = metodoPagoSelect.value;
+
+    if (!cliente) {
+
+        mostrarMensaje(
+            "Ingresa el nombre del cliente.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!metodoPago) {
+
+        mostrarMensaje(
+            "Selecciona un método de pago.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (productosVenta.length === 0) {
+
+        mostrarMensaje(
+            "Agrega al menos un medicamento a la venta.",
+            "error"
+        );
+
+        return;
+    }
+
+    const venta = {
+        CLIENTE_NOMBRE: cliente,
+        METODO_PAGO: metodoPago,
+        productos: productosVenta.map(producto => ({
+            MEDICAMENTO_ID: producto.MEDICAMENTO_ID,
+            CANTIDAD: producto.CANTIDAD
+        }))
+    };
+
+    btnFinalizar.disabled = true;
+    btnFinalizar.textContent = "Registrando venta...";
+
+    try {
+
+        const respuesta = await fetch(`${API_URL}/ventas`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(venta)
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.mensaje || "No se pudo registrar la venta"
+            );
+        }
+
+        mostrarMensaje(
+            `Venta #${datos.codigoVenta} registrada correctamente.`,
+            "success"
+        );
+
+        saleStatus.style.display = "block";
+
+        saleStatusText.textContent =
+            `Código de venta: ${datos.codigoVenta} | Total: $${formatearNumero(datos.total)}`;
+
+        clienteInput.value = "";
+        metodoPagoSelect.value = "";
+        medicamentoSelect.value = "";
+        cantidadInput.value = 1;
+
+        precioElement.textContent = "$0";
+        stockElement.textContent = "0";
+
+        productosVenta = [];
+
+        renderizarVenta();
+
+        await cargarMedicamentos();
+
+    } catch (error) {
+
+        mostrarMensaje(
+            error.message,
+            "error"
+        );
+
+    } finally {
+
+        btnFinalizar.disabled = false;
+        btnFinalizar.textContent = "Finalizar venta";
+
+    }
+
+});
+
+function mostrarMensaje(texto, tipo) {
+
+    mensajeElement.textContent = texto;
+
+    mensajeElement.className = `message ${tipo}`;
+
+}
+
+function ocultarMensaje() {
+
+    mensajeElement.textContent = "";
+    mensajeElement.className = "message";
+
+}
+
+function formatearNumero(numero) {
+
+    return Number(numero).toLocaleString("es-CO");
+
+}
+
+cargarMedicamentos();
+
+</script>
+
+</body>
+</html>

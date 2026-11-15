@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmatodo - Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fb;
+            color: #2f3e4d;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 75px;
+            background: linear-gradient(90deg, #8fa7c2, #6f8fb5);
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 45px;
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .logo-text {
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.75;
+        }
+
+        .nav-links a.active {
+            font-weight: 600;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================= */
+
+        .container {
+            padding: 35px 45px;
+        }
+
+        /* =========================
+           ENCABEZADO
+        ========================= */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #34495e;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #7b8794;
+            font-size: 14px;
+        }
+
+        /* =========================
+           BOTÓN
+        ========================= */
+
+        .btn-primary {
+            background: #6f8fb5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #5f7fa5;
+        }
+
+        /* =========================
+           TARJETAS RESUMEN
+        ========================= */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .card-title {
+            color: #7b8794;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 27px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        /* =========================
+           RESUMEN DEL SISTEMA
+        ========================= */
+
+        .system-summary {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            margin-bottom: 20px;
+        }
+
+        .system-summary h2 {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 7px;
+        }
+
+        .system-summary p {
+            color: #7b8794;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           SECCIÓN INFERIOR
+        ========================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            padding: 20px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        .panel-header span {
+            color: #7b8794;
+            font-size: 12px;
+        }
+
+        /* =========================
+           ALERTAS
+        ========================= */
+
+        .alert-section {
+            margin-bottom: 18px;
+        }
+
+        .alert-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-title {
+            color: #5d6d7e;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .alert-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 7px;
+            font-size: 12px;
+            color: #465665;
+        }
+
+        .btn-alerta {
+            background: #fff4d9;
+            color: #a97900;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .btn-vencer {
+            background: #fde7e7;
+            color: #c0392b;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .alert-ok {
+            background: #e5f6ed;
+            color: #238b58;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        /* =========================
+           TABLA DE VENTAS
+        ========================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f1f5f9;
+            color: #5d6d7e;
+            font-size: 12px;
+            text-align: left;
+            padding: 13px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px;
+            border-top: 1px solid #edf1f5;
+            font-size: 13px;
+            color: #465665;
+            white-space: nowrap;
+        }
+
+        tbody tr:hover {
+            background: #f9fbfd;
+        }
+
+        .total {
+            font-weight: 600;
+            color: #52769a;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #8995a2;
+            font-size: 13px;
+        }
+
+        /* =========================
+           ESTADO
+        ========================= */
+
+        #estado {
+            text-align: center;
+            color: #c0392b;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo-container {
+                margin-right: 20px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 25px 18px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .system-summary {
+                padding: 18px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo-container">
+
+        <img
+            src="img/LogoPharmatodo.jpeg"
+            class="logo"
+        >
+
+        <span class="logo-text">
+            Pharmatodo
+        </span>
+
+    </div>
+
+    <div class="nav-links">
+        <a href="Dashboard.html" class="active">Inicio</a>
+        <a href="Gestiondeproductos.html">Productos</a>
+        <a href="Inventario.html">Inventario</a>
+        <a href="Ventas.html">Ventas</a>
+        <a href="Proveedores.html">Proveedores</a>
+        <a href="Reportes.html">Reportes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Configuracion.html">Configuración</a>
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     CONTENIDO
+========================= -->
+
+<main class="container">
+
+
+    <!-- ENCABEZADO -->
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                Panel principal
+            </h1>
+
+            <p>
+                Resumen general de la gestión de productos e inventario.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TARJETAS
+    ========================= -->
+
+    <section class="summary">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Productos registrados
+            </div>
+
+            <div
+                class="card-value"
+                id="productos"
+            >
+                Cargando...
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Cantidad total
+            </div>
+
+            <div
+                class="card-value"
+                id="inventario"
+            >
+                Cargando...
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Stock bajo
+            </div>
+
+            <div
+                class="card-value"
+                id="bajoStock"
+            >
+                Cargando...
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Próximos a vencer
+            </div>
+
+            <div
+                class="card-value"
+                id="proximosVencer"
+            >
+                Cargando...
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         RESUMEN
+    ========================= -->
+
+    <section class="system-summary">
+
+        <h2>
+            Resumen del sistema
+        </h2>
+
+        <p>
+            Desde este panel puede consultar rápidamente el estado
+            general de los productos, las existencias disponibles,
+            las alertas de inventario y las ventas recientes.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         ALERTAS Y VENTAS
+    ========================= -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- ALERTAS -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    Alertas del sistema
+                </h2>
+
+                <span>
+                    Inventario
+                </span>
+
+            </div>
+
+
+            <div class="alert-section">
+
+                <div class="alert-title">
+                    Stock bajo
+                </div>
+
+                <div id="alertasStock">
+
+                    <p class="empty">
+                        Cargando alertas...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="alert-section">
+
+                <div class="alert-title">
+                    Próximos vencimientos
+                </div>
+
+                <div id="alertasVencimiento">
+
+                    <p class="empty">
+                        Cargando vencimientos...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- VENTAS -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    Ventas recientes
+                </h2>
+
+                <span>
+                    Últimos registros
+                </span>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Factura
+                            </th>
+
+                            <th>
+                                Cliente
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaVentas">
+
+                        <tr>
+
+                            <td
+                                colspan="3"
+                                class="empty"
+                            >
+                                Cargando ventas...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <p id="estado"></p>
+
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+
+async function cargarDashboard() {
+
+    try {
+
+        const respuesta =
+            await fetch("http://localhost:3000/api/dashboard");
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "Error al obtener los datos"
+            );
+
+        }
+
+
+        const datos =
+            await respuesta.json();
+
+
+        /* =========================
+           TARJETAS
+        ========================= */
+
+        document.getElementById("productos").textContent =
+            `${datos.productos}`;
+
+
+        document.getElementById("inventario").textContent =
+            `${datos.inventario}`;
+
+
+        document.getElementById("bajoStock").textContent =
+            `${datos.bajoStock}`;
+
+
+        document.getElementById("proximosVencer").textContent =
+            `${datos.proximosVencer}`;
+
+
+        /* =========================
+           ALERTAS DE STOCK
+        ========================= */
+
+        const alertasStock =
+            document.getElementById("alertasStock");
+
+
+        if (
+            datos.medicamentosBajoStock.length === 0
+        ) {
+
+            alertasStock.innerHTML = `
+                <p class="alert-ok">
+                    ✓ No hay medicamentos con stock bajo
+                </p>
+            `;
+
+        } else {
+
+            alertasStock.innerHTML = `
+                <p class="alert-title">
+                    ⚠ ${datos.bajoStock}
+                    medicamentos con stock bajo
+                </p>
+            `;
+
+
+            datos.medicamentosBajoStock.forEach(
+                medicamento => {
+
+                    alertasStock.innerHTML += `
+
+                        <div class="alert-item">
+
+                            <span>
+                                ${medicamento.NOMBRE}
+                            </span>
+
+                            <button class="btn-alerta">
+                                ${medicamento.STOCK} unidades
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           ALERTAS DE VENCIMIENTO
+        ========================= */
+
+        const alertasVencimiento =
+            document.getElementById(
+                "alertasVencimiento"
+            );
+
+
+        if (
+            datos.medicamentosProximosVencer.length === 0
+        ) {
+
+            alertasVencimiento.innerHTML = `
+
+                <p class="alert-ok">
+                    ✓ No hay medicamentos próximos a vencer
+                </p>
+
+            `;
+
+        } else {
+
+            alertasVencimiento.innerHTML = `
+
+                <p class="alert-title">
+                    ⚠ ${datos.proximosVencer}
+                    medicamentos próximos a vencer
+                </p>
+
+            `;
+
+
+            datos.medicamentosProximosVencer.forEach(
+                medicamento => {
+
+                    alertasVencimiento.innerHTML += `
+
+                        <div class="alert-item">
+
+                            <span>
+                                ${medicamento.NOMBRE}
+                            </span>
+
+                            <button class="btn-vencer">
+
+                                ${
+                                    new Date(
+                                        medicamento.FECHA_VENCIMIENTO
+                                    ).toLocaleDateString("es-CO")
+                                }
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           VENTAS
+        ========================= */
+
+        const tablaVentas =
+            document.getElementById(
+                "tablaVentas"
+            );
+
+
+        if (
+            datos.ventasRecientes.length === 0
+        ) {
+
+            tablaVentas.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="3"
+                        class="empty"
+                    >
+                        No hay ventas registradas
+                    </td>
+
+                </tr>
+
+            `;
+
+        } else {
+
+            tablaVentas.innerHTML = "";
+
+
+            datos.ventasRecientes.forEach(
+                venta => {
+
+                    tablaVentas.innerHTML += `
+
+                        <tr>
+
+                            <td>
+                                ${String(
+                                    venta.CODIGO
+                                ).padStart(5, "0")}
+                            </td>
+
+                            <td>
+                                ${venta.CLIENTE_NOMBRE}
+                            </td>
+
+                            <td class="total">
+                                $${Number(
+                                    venta.TOTAL
+                                ).toLocaleString("es-CO")}
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "estado"
+        ).textContent =
+            "No se pudieron cargar los datos del Dashboard.";
+
+    }
+
+}
+
+
+cargarDashboard();
+
+</script>
+
+</body>
+</html>

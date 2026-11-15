@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmatodo - Actualización de Productos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fb;
+            color: #2f3e4d;
+        }
+
+        .navbar {
+            height: 75px;
+            background: linear-gradient(90deg, #8fa7c2, #6f8fb5);
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 45px;
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .logo-text {
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.75;
+        }
+
+        .nav-links a.active {
+            font-weight: 600;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        .container {
+            padding: 35px 45px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #34495e;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #7b8794;
+            font-size: 14px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 0.85fr 1.4fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .panel-title {
+            color: #34495e;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .panel-subtitle {
+            color: #7b8794;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .search {
+            margin-bottom: 18px;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d7dee7;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search input:focus {
+            border-color: #6f8fb5;
+        }
+
+        .lista-productos {
+            max-height: 560px;
+            overflow-y: auto;
+            padding-right: 3px;
+        }
+
+        .producto-item {
+            background: #f7f9fc;
+            border: 1px solid #e5eaf0;
+            color: #465665;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .producto-item:hover {
+            background: #f1f5f9;
+            border-color: #cbd6e2;
+        }
+
+        .producto-item.activo {
+            background: #eaf1f8;
+            border-color: #6f8fb5;
+            box-shadow: inset 3px 0 0 #6f8fb5;
+        }
+
+        .producto-item strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #34495e;
+            font-size: 14px;
+        }
+
+        .producto-item span {
+            font-size: 12px;
+            color: #7b8794;
+        }
+
+        .estado {
+            text-align: center;
+            color: #7b8794;
+            font-size: 13px;
+            padding: 25px 10px;
+        }
+
+        .form-panel {
+            min-height: 100%;
+        }
+
+        .modo {
+            background: #f1f5f9;
+            color: #5d6d7e;
+            padding: 11px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #536273;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d7dee7;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            color: #465665;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #6f8fb5;
+        }
+
+        .form-group input:disabled {
+            background: #edf1f5;
+            color: #7b8794;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .btn {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: #6f8fb5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5f7fa5;
+        }
+
+        .btn-secondary {
+            background: #edf1f5;
+            color: #526171;
+        }
+
+        .btn-secondary:hover {
+            background: #e1e7ed;
+        }
+
+        .btn-new {
+            background: #e5f6ed;
+            color: #238b58;
+        }
+
+        .btn-new:hover {
+            background: #d7f0e3;
+        }
+
+        .btn-delete {
+            background: #fde8e8;
+            color: #bd3e3e;
+        }
+
+        .btn-delete:hover {
+            background: #f9dada;
+        }
+
+        .mensaje {
+            padding: 11px 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            display: none;
+            font-size: 13px;
+        }
+
+        .mensaje.exito {
+            display: block;
+            background: #e6f6ed;
+            color: #237b50;
+        }
+
+        .mensaje.error {
+            display: block;
+            background: #fde8e8;
+            color: #b93636;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid #edf1f5;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .logo-container {
+                margin-right: 20px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 25px 18px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                justify-content: stretch;
+            }
+
+            .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo-container">
+        <img src="img/LogoPharmatodo.jpeg" alt="Logo Pharmatodo" class="logo">
+        <span class="logo-text">Pharmatodo</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Gestiondeproductos.html" class="active">Productos</a>
+        <a href="Inventario.html">Inventario</a>
+        <a href="Ventas.html">Ventas</a>
+        <a href="Proveedores.html">Proveedores</a>
+        <a href="Reportes.html">Reportes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Configuracion.html">Configuración</a>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>Actualización de productos</h1>
+            <p>Administra y modifica la información de los medicamentos registrados.</p>
+        </div>
+    </div>
+
+    <div class="content-grid">
+
+        <div class="panel">
+
+            <h2 class="panel-title">Productos registrados</h2>
+            <p class="panel-subtitle">
+                Selecciona un producto para consultar o modificar su información.
+            </p>
+
+            <div class="search">
+                <input
+                    type="text"
+                    id="buscador"
+                    placeholder="Buscar producto..."
+                    oninput="buscarProductos()"
+                >
+            </div>
+
+            <div id="lista-productos" class="lista-productos">
+                <p class="estado">Cargando productos...</p>
+            </div>
+
+        </div>
+
+        <div class="panel form-panel">
+
+            <h2 class="panel-title">Información del producto</h2>
+            <p class="panel-subtitle">
+                Actualiza los datos necesarios y guarda los cambios.
+            </p>
+
+            <div id="mensaje" class="mensaje"></div>
+
+            <div id="modo" class="modo">
+                Seleccione un producto para actualizarlo.
+            </div>
+
+            <div class="form-group">
+                <label for="id">ID del producto</label>
+                <input type="number" id="id" disabled>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="nombre">Nombre del producto</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Ingrese el nombre del producto"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <input
+                        type="text"
+                        id="tipo"
+                        placeholder="Ingrese el tipo de producto"
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input
+                        type="number"
+                        id="precio"
+                        placeholder="Ingrese el precio"
+                        min="0"
+                        step="0.01"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input
+                        type="number"
+                        id="stock"
+                        placeholder="Ingrese la cantidad disponible"
+                        min="0"
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="fecha-vencimiento">Fecha de vencimiento</label>
+                    <input
+                        type="date"
+                        id="fecha-vencimiento"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="venta-codigo">Código de venta</label>
+                    <input
+                        type="text"
+                        id="venta-codigo"
+                        placeholder="Ingrese el código de venta"
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-new"
+                    id="btnNuevo"
+                    onclick="nuevoProducto()"
+                >
+                    + Nuevo producto
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="btnGuardar"
+                    style="display:none;"
+                    onclick="guardarProducto()"
+                >
+                    Guardar producto
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="btnActualizar"
+                    style="display:none;"
+                    onclick="actualizarProducto()"
+                >
+                    Guardar cambios
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-delete"
+                    id="btnEliminar"
+                    style="display:none;"
+                    onclick="eliminarProducto()"
+                >
+                    Eliminar
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="cancelarEdicion()"
+                >
+                    Cancelar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+
+const API_URL = "http://localhost:3000/api/medicamentos";
+const PRODUCTOS_URL = "Gestiondeproductos.html";
+
+let productos = [];
+let productoSeleccionado = null;
+let modoEdicionDesdeProductos = false;
+
+async function cargarProductos() {
+
+    const lista = document.getElementById("lista-productos");
+
+    lista.innerHTML = '<p class="estado">Cargando productos...</p>';
+
+    try {
+
+        const respuesta = await fetch(API_URL);
+
+        if (!respuesta.ok) {
+            throw new Error("No se pudieron cargar los productos");
+        }
+
+        productos = await respuesta.json();
+
+        mostrarLista(productos);
+
+        cargarProductoDesdeURL();
+
+    } catch (error) {
+
+        console.error(error);
+
+        lista.innerHTML = `
+            <p class="estado">
+                No fue posible cargar los productos.
+            </p>
+        `;
+
+        mostrarMensaje(
+            "No fue posible conectar con el servidor.",
+            "error"
+        );
+
+    }
+}
+
+function cargarProductoDesdeURL() {
+
+    const parametros = new URLSearchParams(window.location.search);
+    const id = parametros.get("id");
+
+    if (!id) {
+        return;
+    }
+
+    const producto = productos.find(
+        producto => Number(producto.ID) === Number(id)
+    );
+
+    if (!producto) {
+
+        mostrarMensaje(
+            "No se encontró el producto seleccionado.",
+            "error"
+        );
+
+        return;
+    }
+
+    modoEdicionDesdeProductos = true;
+
+    seleccionarProducto(producto.ID);
+
+    document.getElementById("modo").textContent =
+        "Editando producto seleccionado desde Gestión de Productos.";
+
+}
+
+function mostrarLista(listaProductos) {
+
+    const lista = document.getElementById("lista-productos");
+
+    lista.innerHTML = "";
+
+    if (listaProductos.length === 0) {
+
+        lista.innerHTML = `
+            <p class="estado">
+                No se encontraron productos.
+            </p>
+        `;
+
+        return;
+    }
+
+    listaProductos.forEach(producto => {
+
+        const item = document.createElement("div");
+
+        item.className = "producto-item";
+
+        if (
+            productoSeleccionado &&
+            Number(producto.ID) === Number(productoSeleccionado.ID)
+        ) {
+            item.classList.add("activo");
+        }
+
+        item.innerHTML = `
+            <strong>${producto.NOMBRE}</strong>
+            <span>ID: ${producto.ID}</span>
+            <br>
+            <span>Tipo: ${producto.TIPO}</span>
+            <br>
+            <span>Stock: ${producto.STOCK}</span>
+        `;
+
+        item.onclick = () => seleccionarProducto(producto.ID);
+
+        lista.appendChild(item);
+
+    });
+
+}
+
+function seleccionarProducto(id) {
+
+    const producto = productos.find(
+        producto => Number(producto.ID) === Number(id)
+    );
+
+    if (!producto) {
+        return;
+    }
+
+    productoSeleccionado = producto;
+
+    document.getElementById("id").value = producto.ID;
+    document.getElementById("nombre").value = producto.NOMBRE || "";
+    document.getElementById("tipo").value = producto.TIPO || "";
+    document.getElementById("precio").value = producto.PRECIO ?? "";
+    document.getElementById("fecha-vencimiento").value =
+        formatearFecha(producto.FECHA_VENCIMIENTO);
+    document.getElementById("stock").value = producto.STOCK ?? "";
+    document.getElementById("venta-codigo").value =
+        producto.VENTA_CODIGO ?? "";
+
+    document.getElementById("modo").textContent =
+        `Editando producto: ${producto.NOMBRE}`;
+
+    document.getElementById("btnGuardar").style.display = "none";
+    document.getElementById("btnActualizar").style.display = "inline-block";
+    document.getElementById("btnEliminar").style.display = "inline-block";
+
+    mostrarLista(productos);
+
+    limpiarMensaje();
+
+}
+
+function buscarProductos() {
+
+    const texto = document
+        .getElementById("buscador")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const resultados = productos.filter(producto => {
+
+        return (
+            String(producto.ID).toLowerCase().includes(texto) ||
+            String(producto.NOMBRE).toLowerCase().includes(texto) ||
+            String(producto.TIPO).toLowerCase().includes(texto) ||
+            String(producto.VENTA_CODIGO || "")
+                .toLowerCase()
+                .includes(texto)
+        );
+
+    });
+
+    mostrarLista(resultados);
+
+}
+
+function validarFormulario() {
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const tipo = document.getElementById("tipo").value.trim();
+    const precio = document.getElementById("precio").value;
+    const fecha = document.getElementById("fecha-vencimiento").value;
+    const stock = document.getElementById("stock").value;
+    const ventaCodigo =
+        document.getElementById("venta-codigo").value.trim();
+
+    if (!nombre) {
+
+        mostrarMensaje(
+            "El nombre del producto es obligatorio.",
+            "error"
+        );
+
+        return false;
+    }
+
+    if (!tipo) {
+
+        mostrarMensaje(
+            "El tipo de producto es obligatorio.",
+            "error"
+        );
+
+        return false;
+    }
+
+    if (precio === "" || Number(precio) < 0) {
+
+        mostrarMensaje(
+            "Ingrese un precio válido.",
+            "error"
+        );
+
+        return false;
+    }
+
+    if (!fecha) {
+
+        mostrarMensaje(
+            "La fecha de vencimiento es obligatoria.",
+            "error"
+        );
+
+        return false;
+    }
+
+    if (stock === "" || Number(stock) < 0) {
+
+        mostrarMensaje(
+            "Ingrese una cantidad de stock válida.",
+            "error"
+        );
+
+        return false;
+    }
+
+    if (!ventaCodigo) {
+
+        mostrarMensaje(
+            "El código de venta es obligatorio.",
+            "error"
+        );
+
+        return false;
+    }
+
+    return true;
+
+}
+
+function obtenerDatosFormulario() {
+
+    return {
+        NOMBRE: document.getElementById("nombre").value.trim(),
+        TIPO: document.getElementById("tipo").value.trim(),
+        PRECIO: Number(document.getElementById("precio").value),
+        FECHA_VENCIMIENTO:
+            document.getElementById("fecha-vencimiento").value,
+        STOCK: Number(document.getElementById("stock").value),
+        VENTA_CODIGO:
+            document.getElementById("venta-codigo").value.trim()
+    };
+
+}
+
+async function guardarProducto() {
+
+    if (!validarFormulario()) {
+        return;
+    }
+
+    const datos = obtenerDatosFormulario();
+
+    try {
+
+        const respuesta = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error("No se pudo registrar el producto");
+        }
+
+        const resultado = await respuesta.json();
+
+        mostrarMensaje(
+            resultado.mensaje || "Producto registrado correctamente.",
+            "exito"
+        );
+
+        await cargarProductos();
+
+        limpiarFormulario();
+
+        mostrarMensaje(
+            "Producto registrado correctamente.",
+            "exito"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        mostrarMensaje(
+            "No fue posible registrar el producto.",
+            "error"
+        );
+
+    }
+
+}
+
+async function actualizarProducto() {
+
+    if (!productoSeleccionado) {
+
+        mostrarMensaje(
+            "Seleccione un producto para actualizar.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!validarFormulario()) {
+        return;
+    }
+
+    const datos = obtenerDatosFormulario();
+
+    const id = productoSeleccionado.ID;
+
+    try {
+
+        const respuesta = await fetch(
+            `${API_URL}/${id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            }
+        );
+
+        if (!respuesta.ok) {
+            throw new Error("No se pudo actualizar el producto");
+        }
+
+        const resultado = await respuesta.json();
+
+        if (modoEdicionDesdeProductos) {
+
+            mostrarMensaje(
+                resultado.mensaje || "Producto actualizado correctamente.",
+                "exito"
+            );
+
+            setTimeout(() => {
+                window.location.href = PRODUCTOS_URL;
+            }, 1200);
+
+            return;
+        }
+
+        await cargarProductos();
+
+        const productoActualizado = productos.find(
+            producto => Number(producto.ID) === Number(id)
+        );
+
+        if (productoActualizado) {
+            productoSeleccionado = productoActualizado;
+            seleccionarProducto(id);
+        }
+
+        mostrarMensaje(
+            resultado.mensaje || "Producto actualizado correctamente.",
+            "exito"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        mostrarMensaje(
+            "No fue posible actualizar el producto.",
+            "error"
+        );
+
+    }
+
+}
+
+async function eliminarProducto() {
+
+    if (!productoSeleccionado) {
+
+        mostrarMensaje(
+            "Seleccione un producto para eliminar.",
+            "error"
+        );
+
+        return;
+    }
+
+    const confirmar = confirm(
+        `¿Está seguro de eliminar el producto "${productoSeleccionado.NOMBRE}"?`
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    const id = productoSeleccionado.ID;
+
+    try {
+
+        const respuesta = await fetch(
+            `${API_URL}/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const resultado = await respuesta.json().catch(() => ({}));
+
+        if (!respuesta.ok) {
+            throw new Error(resultado.mensaje || "No se pudo eliminar el producto");
+        }
+
+        productoSeleccionado = null;
+        modoEdicionDesdeProductos = false;
+
+        limpiarFormulario();
+
+        await cargarProductos();
+
+        mostrarMensaje(
+            resultado.mensaje || "Producto eliminado correctamente.",
+            "exito"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        mostrarMensaje(
+            error.message || "No fue posible eliminar el producto.",
+            "error"
+        );
+
+    }
+
+}
+
+function nuevoProducto() {
+
+    productoSeleccionado = null;
+    modoEdicionDesdeProductos = false;
+
+    document.getElementById("id").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("fecha-vencimiento").value = "";
+    document.getElementById("stock").value = "";
+    document.getElementById("venta-codigo").value = "";
+
+    document.getElementById("modo").textContent =
+        "Modo nuevo producto: complete la información para registrar.";
+
+    document.getElementById("btnGuardar").style.display = "inline-block";
+    document.getElementById("btnActualizar").style.display = "none";
+    document.getElementById("btnEliminar").style.display = "none";
+
+    document.getElementById("nombre").focus();
+
+    mostrarLista(productos);
+
+    limpiarMensaje();
+
+}
+
+function limpiarFormulario() {
+
+    productoSeleccionado = null;
+
+    document.getElementById("id").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("fecha-vencimiento").value = "";
+    document.getElementById("stock").value = "";
+    document.getElementById("venta-codigo").value = "";
+
+    document.getElementById("btnGuardar").style.display = "none";
+    document.getElementById("btnActualizar").style.display = "none";
+    document.getElementById("btnEliminar").style.display = "none";
+
+    mostrarLista(productos);
+
+    document.getElementById("modo").textContent =
+        "Seleccione un producto para actualizarlo.";
+
+}
+
+function cancelarEdicion() {
+
+    const parametros = new URLSearchParams(window.location.search);
+    const id = parametros.get("id");
+
+    if (id) {
+        window.location.href = PRODUCTOS_URL;
+        return;
+    }
+
+    limpiarFormulario();
+
+    document.getElementById("buscador").value = "";
+
+    limpiarMensaje();
+
+}
+
+function formatearFecha(fecha) {
+
+    if (!fecha) {
+        return "";
+    }
+
+    const texto = String(fecha);
+
+    if (texto.includes("T")) {
+        return texto.split("T")[0];
+    }
+
+    return texto.substring(0, 10);
+
+}
+
+function mostrarMensaje(texto, tipo) {
+
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.textContent = texto;
+    mensaje.className = "mensaje " + tipo;
+
+}
+
+function limpiarMensaje() {
+
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.textContent = "";
+    mensaje.className = "mensaje";
+
+}
+
+cargarProductos();
+
+</script>
+
+</body>
+</html>

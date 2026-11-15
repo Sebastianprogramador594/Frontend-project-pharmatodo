@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmatodo - Reportes</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--azul:#6f8fb5;--azul-claro:#8fa7c2;--texto:#2f3e4d;--fondo:#f4f7fb;--borde:#e2e8f0;--muted:#718096;--verde:#2f855a;--rojo:#c53030;--amarillo:#b7791f}
+body{font-family:'Poppins',sans-serif;background:var(--fondo);color:var(--texto);min-height:100vh}
+.navbar{height:75px;background:linear-gradient(90deg,var(--azul-claro),var(--azul));display:flex;align-items:center;justify-content:space-between;padding:0 4%;box-shadow:0 3px 12px #24364b1a;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;font-size:21px;font-weight:700;white-space:nowrap}
+.brand img{width:52px;height:52px;object-fit:cover;border-radius:50%;background:#fff;border:2px solid #ffffff80}
+.nav-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+.nav-links a{color:#fff;text-decoration:none;font-size:12px;font-weight:500;padding:8px 0;border-bottom:2px solid transparent;transition:.2s}
+.nav-links a:hover,.nav-links a.active{border-color:#fff}
+.container{max-width:1440px;margin:28px auto;padding:0 28px 36px}
+.page-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:22px}
+.page-heading h1{font-size:27px;font-weight:700;margin-bottom:5px}
+.page-heading p{color:var(--muted);font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+button,.button{border:0;border-radius:9px;padding:10px 15px;font:500 12px 'Poppins',sans-serif;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+button:hover,.button:hover{transform:translateY(-1px);filter:brightness(.98)}
+.btn-primary{background:var(--azul);color:white}.btn-secondary{background:#e5edf6;color:#405b79}.btn-outline{background:white;color:#526b88;border:1px solid #cbd8e6}.btn-danger{background:#fff0f0;color:var(--rojo)}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.summary-card{background:white;border-radius:14px;padding:20px;box-shadow:0 4px 14px #24364b0a;border:1px solid #edf1f6;display:flex;align-items:center;gap:15px;min-height:112px}
+.summary-icon{width:47px;height:47px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;background:#e9f0f8;flex-shrink:0}
+.summary-card:nth-child(2) .summary-icon{background:#e8f6ef}.summary-card:nth-child(3) .summary-icon{background:#fff4dc}.summary-card:nth-child(4) .summary-icon{background:#fdecec}
+.summary-card .label{font-size:11px;color:var(--muted);margin-bottom:5px}.summary-card .value{font-size:22px;font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+.panel{background:white;border-radius:14px;padding:22px;box-shadow:0 4px 14px #24364b0a;border:1px solid #edf1f6;margin-bottom:20px}
+.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:17px;flex-wrap:wrap}
+.panel-heading h2{font-size:17px;font-weight:600}.panel-heading p{font-size:11px;color:var(--muted);margin-top:4px}
+.report-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab-btn{background:#e8eef6;color:#526b88;padding:10px 17px;border-radius:9px}
+.tab-btn.active{background:var(--azul);color:#fff}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:11px;color:#526174;font-weight:500}
+.field input,.field select{width:100%;padding:10px 11px;border:1px solid #d8e1eb;border-radius:8px;background:#fff;color:var(--texto);font:400 12px 'Poppins',sans-serif;outline:none}
+.field input:focus,.field select:focus{border-color:var(--azul);box-shadow:0 0 0 3px #8fa7c222}
+.filter-actions{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.table-wrap{width:100%;overflow-x:auto;border:1px solid #e8edf3;border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+thead{background:#f3f6fa}
+th{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.35px;text-align:left;padding:13px 14px;font-weight:600;white-space:nowrap}
+td{padding:13px 14px;border-top:1px solid #edf1f5;font-size:11px;vertical-align:middle}
+tbody tr:hover{background:#fafcff}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:12px}
+.status{display:inline-flex;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap}
+.status-ok{background:#e6f6ed;color:#28764b}.status-low{background:#fff4d6;color:#9b6b00}.status-out,.status-expired{background:#fde8e8;color:#b83232}.status-neutral{background:#e8eef6;color:#526b88}
+.mini-btn{padding:7px 10px;font-size:10px;background:#eaf0f7;color:#486582;border-radius:7px}
+.notice{padding:12px 14px;border-radius:9px;font-size:11px;margin-bottom:15px;display:none}
+.notice.error{display:block;background:#fff0f0;color:#a52d2d;border:1px solid #f5cccc}
+.notice.success{display:block;background:#eaf8ef;color:#267349;border:1px solid #ccebd6}
+.loading{color:var(--muted);text-align:center;padding:25px;font-size:12px}
+.modal-backdrop{position:fixed;inset:0;background:#1f293766;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;border-radius:15px;width:min(780px,100%);max-height:85vh;overflow:auto;padding:24px;box-shadow:0 20px 60px #0002}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+.modal-header h2{font-size:18px}.modal-header p{font-size:11px;color:var(--muted);margin-top:4px}
+.close-btn{background:#edf2f7;color:#526174;font-size:17px;padding:6px 11px}
+.modal-total{font-size:13px;font-weight:600;text-align:right;margin-top:16px}
+.footer-note{font-size:10px;color:var(--muted);text-align:right;margin-top:12px}
+@media(max-width:1050px){.navbar{height:auto;min-height:75px;padding:12px 3%;align-items:flex-start;flex-direction:column}.nav-links{justify-content:flex-start;gap:12px}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.container{padding:0 14px 24px;margin-top:20px}.page-heading{flex-direction:column}.page-heading h1{font-size:23px}.summary-grid{grid-template-columns:1fr 1fr;gap:10px}.summary-card{padding:13px;gap:10px}.summary-icon{width:38px;height:38px;font-size:19px}.summary-card .value{font-size:17px}.summary-card .label{font-size:10px}.panel{padding:15px}.filters{grid-template-columns:1fr}.brand{font-size:18px}.nav-links a{font-size:11px}}
+@media print{.navbar,.actions,.report-tabs,.filters,.filter-actions,.table-actions,.no-print{display:none!important}body{background:white}.container{max-width:none;padding:0;margin:0}.panel,.summary-card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.summary-grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="brand">
+            <img src="img/LogoPharmatodo.jpeg" class="brand-logo">
+            <span>Pharmatodo</span>
+        </div>
+    <div class="nav-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Gestiondeproductos.html">Productos</a>
+        <a href="Inventario.html">Inventario</a>
+        <a href="Ventas.html">Ventas</a>
+        <a href="Proveedores.html">Proveedores</a>
+        <a href="Reportes.html" class="active">Reportes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Configuracion.html">Configuración</a>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="page-heading">
+        <div>
+            <h1>Reportes</h1>
+            <p>Consulta y analiza la información registrada en Pharmatodo.</p>
+        </div>
+        <div class="actions">
+            <button class="btn-outline" id="refreshBtn">↻ Actualizar datos</button>
+            <button class="btn-secondary" id="printBtn">▤ Imprimir reporte</button>
+            <button class="btn-primary" id="exportBtn">⇩ Exportar CSV</button>
+        </div>
+    </div>
+
+    <div id="globalNotice" class="notice"></div>
+
+    <section class="summary-grid">
+        <article class="summary-card">
+            <div class="summary-icon">▤</div>
+            <div><div class="label">Ventas registradas</div><div class="value" id="totalVentas">—</div></div>
+        </article>
+        <article class="summary-card">
+            <div class="summary-icon">$</div>
+            <div><div class="label">Ingresos acumulados</div><div class="value" id="totalIngresos">—</div></div>
+        </article>
+        <article class="summary-card">
+            <div class="summary-icon">▦</div>
+            <div><div class="label">Medicamentos registrados</div><div class="value" id="totalMedicamentos">—</div></div>
+        </article>
+        <article class="summary-card">
+            <div class="summary-icon">!</div>
+            <div><div class="label">Productos con alertas</div><div class="value" id="totalAlertas">—</div></div>
+        </article>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Centro de reportes</h2>
+                <p>Selecciona el tipo de información que deseas consultar.</p>
+            </div>
+        </div>
+
+        <div class="report-tabs no-print">
+            <button class="tab-btn active" data-report="ventas">Reporte de ventas</button>
+            <button class="tab-btn" data-report="productos">Reporte de productos</button>
+            <button class="tab-btn" data-report="inventario">Reporte de inventario</button>
+        </div>
+
+        <div class="filters no-print">
+            <div class="field" id="searchField">
+                <label for="searchInput">Buscar</label>
+                <input type="text" id="searchInput" placeholder="Cliente o código de venta">
+            </div>
+            <div class="field" id="fromField">
+                <label for="dateFrom">Desde</label>
+                <input type="date" id="dateFrom">
+            </div>
+            <div class="field" id="toField">
+                <label for="dateTo">Hasta</label>
+                <input type="date" id="dateTo">
+            </div>
+            <div class="field" id="statusField" style="display:none">
+                <label for="statusFilter">Estado</label>
+                <select id="statusFilter">
+                    <option value="">Todos los estados</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="bajo">Stock bajo</option>
+                    <option value="agotado">Agotado</option>
+                    <option value="vencido">Vencido</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-actions no-print" style="margin-bottom:18px">
+            <button class="btn-primary" id="applyFilters">Aplicar filtros</button>
+            <button class="btn-outline" id="clearFilters">Limpiar filtros</button>
+        </div>
+
+        <div class="panel-heading">
+            <div>
+                <h2 id="tableTitle">Historial de ventas</h2>
+                <p id="tableDescription">Ventas registradas ordenadas de la más reciente a la más antigua.</p>
+            </div>
+            <span class="status status-neutral" id="resultCount">0 registros</span>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"><tr><td class="loading" colspan="6">Cargando información...</td></tr></tbody>
+            </table>
+        </div>
+        <p class="footer-note" id="lastUpdated"></p>
+    </section>
+</main>
+
+<div class="modal-backdrop" id="detailModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h2 id="modalTitle">Detalle de venta</h2>
+                <p id="modalSubtitle">Productos incluidos en la venta seleccionada.</p>
+            </div>
+            <button class="close-btn" id="closeModal" aria-label="Cerrar">×</button>
+        </div>
+        <div id="modalNotice" class="notice"></div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Medicamento</th><th>Cantidad</th><th>Precio unitario</th><th>Subtotal</th></tr>
+                </thead>
+                <tbody id="detailBody"><tr><td class="loading" colspan="4">Cargando detalle...</td></tr></tbody>
+            </table>
+        </div>
+        <div class="modal-total" id="modalTotal"></div>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+const API_URL = "http://localhost:3000/api";
+let ventas = [];
+let medicamentos = [];
+let inventarios = [];
+let reporteActual = "ventas";
+let filasActuales = [];
+let encabezadosActuales = [];
+
+const $ = (id) => document.getElementById(id);
+
+function moneda(valor) {
+    return new Intl.NumberFormat("es-CO", {style:"currency", currency:"COP", maximumFractionDigits:0}).format(Number(valor) || 0);
+}
+
+function fechaTexto(valor) {
+    if (!valor) return "Sin fecha";
+    const fecha = new Date(valor);
+    if (Number.isNaN(fecha.getTime())) return String(valor);
+    return fecha.toLocaleDateString("es-CO", {year:"numeric", month:"2-digit", day:"2-digit"});
+}
+
+function fechaComparable(valor) {
+    if (!valor) return "";
+    const fecha = new Date(valor);
+    if (Number.isNaN(fecha.getTime())) return String(valor).slice(0,10);
+    const anio = fecha.getFullYear();
+    const mes = String(fecha.getMonth()+1).padStart(2,"0");
+    const dia = String(fecha.getDate()).padStart(2,"0");
+    return `${anio}-${mes}-${dia}`;
+}
+
+function mostrarAviso(mensaje, tipo="error") {
+    const aviso = $("globalNotice");
+    aviso.textContent = mensaje;
+    aviso.className = `notice ${tipo}`;
+}
+
+function limpiarAviso() {
+    $("globalNotice").className = "notice";
+    $("globalNotice").textContent = "";
+}
+
+async function obtenerJSON(ruta) {
+    const respuesta = await fetch(`${API_URL}${ruta}`);
+    if (!respuesta.ok) throw new Error(`Error ${respuesta.status} al consultar ${ruta}`);
+    return respuesta.json();
+}
+
+async function cargarDatos() {
+    limpiarAviso();
+    $("tableBody").innerHTML = '<tr><td class="loading" colspan="6">Cargando información...</td></tr>';
+    const resultados = await Promise.allSettled([
+        obtenerJSON("/ventas"),
+        obtenerJSON("/medicamentos"),
+        obtenerJSON("/inventarios")
+    ]);
+
+    const errores = [];
+    if (resultados[0].status === "fulfilled" && Array.isArray(resultados[0].value)) {
+        ventas = resultados[0].value;
+    } else {
+        ventas = [];
+        errores.push("ventas");
+    }
+    if (resultados[1].status === "fulfilled" && Array.isArray(resultados[1].value)) {
+        medicamentos = resultados[1].value;
+    } else {
+        medicamentos = [];
+        errores.push("medicamentos");
+    }
+    if (resultados[2].status === "fulfilled" && Array.isArray(resultados[2].value)) {
+        inventarios = resultados[2].value;
+    } else {
+        inventarios = [];
+        errores.push("inventario");
+    }
+
+    actualizarResumen();
+    renderizarReporte();
+    $("lastUpdated").textContent = `Última actualización: ${new Date().toLocaleString("es-CO")}`;
+
+    if (errores.length) {
+        mostrarAviso(`No fue posible cargar ${errores.join(", ")}. Verifica que el backend esté activo y que las rutas estén disponibles. Los demás datos que sí respondieron se muestran normalmente.`);
+    }
+}
+
+function obtenerEstadoProducto(producto) {
+    const stock = Number(producto.STOCK ?? producto.CANTIDAD_TOTAL ?? producto.CANTIDAD ?? 0);
+    const vencimiento = producto.FECHA_VENCIMIENTO;
+    if (vencimiento) {
+        const fechaVence = new Date(vencimiento);
+        const hoy = new Date();
+        hoy.setHours(0,0,0,0);
+        if (!Number.isNaN(fechaVence.getTime())) {
+            fechaVence.setHours(0,0,0,0);
+            if (fechaVence < hoy) return "vencido";
+        }
+    }
+    if (stock <= 0) return "agotado";
+    if (stock <= 10) return "bajo";
+    return "disponible";
+}
+
+function actualizarResumen() {
+    const ingresos = ventas.reduce((suma, venta) => suma + Number(venta.TOTAL || 0), 0);
+    const alertasMedicamentos = medicamentos.filter(m => ["bajo","agotado","vencido"].includes(obtenerEstadoProducto(m))).length;
+    $("totalVentas").textContent = ventas.length.toLocaleString("es-CO");
+    $("totalIngresos").textContent = moneda(ingresos);
+    $("totalMedicamentos").textContent = medicamentos.length.toLocaleString("es-CO");
+    $("totalAlertas").textContent = alertasMedicamentos.toLocaleString("es-CO");
+}
+
+function cambiarReporte(tipo) {
+    reporteActual = tipo;
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.report === tipo));
+    $("searchInput").value = "";
+    $("dateFrom").value = "";
+    $("dateTo").value = "";
+    $("statusFilter").value = "";
+
+    const esVenta = tipo === "ventas";
+    $("fromField").style.display = esVenta ? "" : "none";
+    $("toField").style.display = esVenta ? "" : "none";
+    $("statusField").style.display = tipo === "inventario" || tipo === "productos" ? "" : "none";
+    $("searchInput").placeholder = esVenta ? "Cliente o código de venta" : tipo === "productos" ? "Nombre o tipo de medicamento" : "Medicamento o ubicación";
+
+    if (tipo === "ventas") {
+        $("tableTitle").textContent = "Historial de ventas";
+        $("tableDescription").textContent = "Ventas registradas ordenadas de la más reciente a la más antigua.";
+    } else if (tipo === "productos") {
+        $("tableTitle").textContent = "Reporte de productos";
+        $("tableDescription").textContent = "Consulta precios, existencias, vencimientos y estado de los medicamentos.";
+    } else {
+        $("tableTitle").textContent = "Reporte de inventario";
+        $("tableDescription").textContent = "Consulta las cantidades y ubicaciones registradas en el inventario.";
+    }
+    renderizarReporte();
+}
+
+function obtenerVentasFiltradas() {
+    const busqueda = $("searchInput").value.trim().toLowerCase();
+    const desde = $("dateFrom").value;
+    const hasta = $("dateTo").value;
+    return ventas.filter(v => {
+        const coincideBusqueda = !busqueda || String(v.CLIENTE_NOMBRE ?? "").toLowerCase().includes(busqueda) || String(v.CODIGO ?? "").toLowerCase().includes(busqueda);
+        const fecha = fechaComparable(v.FECHA);
+        const coincideDesde = !desde || fecha >= desde;
+        const coincideHasta = !hasta || fecha <= hasta;
+        return coincideBusqueda && coincideDesde && coincideHasta;
+    });
+}
+
+function obtenerProductosFiltrados() {
+    const busqueda = $("searchInput").value.trim().toLowerCase();
+    const estado = $("statusFilter").value;
+    return medicamentos.filter(p => {
+        const coincideBusqueda = !busqueda || String(p.NOMBRE ?? "").toLowerCase().includes(busqueda) || String(p.TIPO ?? "").toLowerCase().includes(busqueda);
+        const coincideEstado = !estado || obtenerEstadoProducto(p) === estado;
+        return coincideBusqueda && coincideEstado;
+    });
+}
+
+function obtenerInventariosFiltrados() {
+    const busqueda = $("searchInput").value.trim().toLowerCase();
+    const estado = $("statusFilter").value;
+    return inventarios.filter(i => {
+        const nombre = String(i.MEDICAMENTO_NOMBRE ?? i.NOMBRE ?? "").toLowerCase();
+        const ubicacion = String(i.UBICACION ?? "").toLowerCase();
+        const tipo = String(i.TIPO ?? "").toLowerCase();
+        const coincideBusqueda = !busqueda || nombre.includes(busqueda) || ubicacion.includes(busqueda) || tipo.includes(busqueda);
+        const estadoProducto = obtenerEstadoProducto(i);
+        const coincideEstado = !estado || estadoProducto === estado;
+        return coincideBusqueda && coincideEstado;
+    });
+}
+
+function celda(texto) {
+    const td = document.createElement("td");
+    td.textContent = texto ?? "—";
+    return td;
+}
+
+function estadoHTML(estado) {
+    const etiquetas = {disponible:"Disponible", bajo:"Stock bajo", agotado:"Agotado", vencido:"Vencido"};
+    const clases = {disponible:"status-ok", bajo:"status-low", agotado:"status-out", vencido:"status-expired"};
+    return `<span class="status ${clases[estado] || "status-neutral"}">${etiquetas[estado] || estado}</span>`;
+}
+
+function dibujarTabla(encabezados, filas, tipo) {
+    encabezadosActuales = encabezados;
+    filasActuales = filas;
+    $("tableHead").innerHTML = "";
+    const filaEncabezado = document.createElement("tr");
+    encabezados.forEach(titulo => {
+        const th = document.createElement("th");
+        th.textContent = titulo;
+        filaEncabezado.appendChild(th);
+    });
+    $("tableHead").appendChild(filaEncabezado);
+    $("tableBody").innerHTML = "";
+
+    if (!filas.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = encabezados.length;
+        td.className = "empty";
+        td.textContent = "No se encontraron registros para los filtros seleccionados.";
+        tr.appendChild(td);
+        $("tableBody").appendChild(tr);
+    } else {
+        filas.forEach(item => {
+            const tr = document.createElement("tr");
+            if (tipo === "ventas") {
+                tr.append(celda(`#${item.CODIGO}`), celda(fechaTexto(item.FECHA)), celda(item.CLIENTE_NOMBRE), celda(item.METODO_PAGO), celda(moneda(item.TOTAL)));
+                const td = document.createElement("td");
+                const btn = document.createElement("button");
+                btn.className = "mini-btn";
+                btn.textContent = "Ver detalle";
+                btn.addEventListener("click", () => verDetalleVenta(item));
+                td.appendChild(btn);
+                tr.appendChild(td);
+            } else if (tipo === "productos") {
+                tr.append(celda(item.ID), celda(item.NOMBRE), celda(item.TIPO), celda(moneda(item.PRECIO)), celda(item.STOCK), celda(fechaTexto(item.FECHA_VENCIMIENTO)));
+                const td = document.createElement("td");
+                td.innerHTML = estadoHTML(obtenerEstadoProducto(item));
+                tr.appendChild(td);
+            } else {
+                tr.append(celda(item.ID_INVENTARIO ?? item.ID ?? "—"), celda(item.MEDICAMENTO_NOMBRE ?? item.NOMBRE ?? "—"), celda(item.TIPO ?? "—"), celda(item.CANTIDAD_TOTAL ?? item.CANTIDAD ?? item.STOCK ?? 0), celda(item.UBICACION ?? "—"), celda(fechaTexto(item.FECHA_VENCIMIENTO)),);
+                const td = document.createElement("td");
+                td.innerHTML = estadoHTML(obtenerEstadoProducto(item));
+                tr.appendChild(td);
+            }
+            $("tableBody").appendChild(tr);
+        });
+    }
+    $("resultCount").textContent = `${filas.length.toLocaleString("es-CO")} ${filas.length === 1 ? "registro" : "registros"}`;
+}
+
+function renderizarReporte() {
+    if (reporteActual === "ventas") {
+        dibujarTabla(["Código","Fecha","Cliente","Método de pago","Total","Acciones"], obtenerVentasFiltradas(), "ventas");
+    } else if (reporteActual === "productos") {
+        dibujarTabla(["ID","Medicamento","Tipo","Precio","Stock","Vencimiento","Estado"], obtenerProductosFiltrados(), "productos");
+    } else {
+        dibujarTabla(["ID inventario","Medicamento","Tipo","Cantidad","Ubicación","Vencimiento","Estado"], obtenerInventariosFiltrados(), "inventario");
+    }
+}
+
+async function verDetalleVenta(venta) {
+    $("detailModal").classList.add("show");
+    $("modalTitle").textContent = `Detalle de venta #${venta.CODIGO}`;
+    $("modalSubtitle").textContent = `${venta.CLIENTE_NOMBRE || "Cliente no registrado"} · ${fechaTexto(venta.FECHA)} · ${venta.METODO_PAGO || "Método no indicado"}`;
+    $("detailBody").innerHTML = '<tr><td class="loading" colspan="4">Cargando detalle...</td></tr>';
+    $("modalTotal").textContent = `Total de la venta: ${moneda(venta.TOTAL)}`;
+    $("modalNotice").className = "notice";
+    try {
+        const detalle = await obtenerJSON(`/ventas/${encodeURIComponent(venta.CODIGO)}/detalle`);
+        $("detailBody").innerHTML = "";
+        if (!Array.isArray(detalle) || !detalle.length) {
+            $("detailBody").innerHTML = '<tr><td class="empty" colspan="4">Esta venta no tiene detalles registrados.</td></tr>';
+            return;
+        }
+        detalle.forEach(item => {
+            const tr = document.createElement("tr");
+            tr.append(celda(item.MEDICAMENTO ?? `Medicamento ${item.MEDICAMENTO_ID}`), celda(item.CANTIDAD), celda(moneda(item.PRECIO_UNITARIO)), celda(moneda(item.SUBTOTAL)));
+            $("detailBody").appendChild(tr);
+        });
+    } catch (error) {
+        $("detailBody").innerHTML = '<tr><td class="empty" colspan="4">No fue posible cargar el detalle de la venta.</td></tr>';
+        $("modalNotice").textContent = `${error.message}. Verifica que el backend esté activo.`;
+        $("modalNotice").className = "notice error";
+    }
+}
+
+function exportarCSV() {
+    const filas = filasActuales;
+    if (!filas.length) {
+        mostrarAviso("No hay registros para exportar con los filtros actuales.");
+        return;
+    }
+    let encabezados = [];
+    let valores = [];
+    if (reporteActual === "ventas") {
+        encabezados = ["Código","Fecha","Cliente","Método de pago","Total"];
+        valores = filas.map(v => [v.CODIGO, fechaTexto(v.FECHA), v.CLIENTE_NOMBRE, v.METODO_PAGO, Number(v.TOTAL || 0)]);
+    } else if (reporteActual === "productos") {
+        encabezados = ["ID","Medicamento","Tipo","Precio","Stock","Fecha de vencimiento","Estado"];
+        valores = filas.map(p => [p.ID,p.NOMBRE,p.TIPO,p.PRECIO,p.STOCK,fechaTexto(p.FECHA_VENCIMIENTO),obtenerEstadoProducto(p)]);
+    } else {
+        encabezados = ["ID inventario","Medicamento","Tipo","Cantidad","Ubicación","Fecha de vencimiento","Estado"];
+        valores = filas.map(i => [i.ID_INVENTARIO ?? i.ID,i.MEDICAMENTO_NOMBRE ?? i.NOMBRE,i.TIPO,i.CANTIDAD_TOTAL ?? i.CANTIDAD ?? i.STOCK,i.UBICACION,fechaTexto(i.FECHA_VENCIMIENTO),obtenerEstadoProducto(i)]);
+    }
+    const escapar = valor => `"${String(valor ?? "").replace(/"/g,'""')}"`;
+    const contenido = "\uFEFF" + [encabezados, ...valores].map(fila => fila.map(escapar).join(";")).join("\r\n");
+    const archivo = new Blob([contenido], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(archivo);
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = `Pharmatodo_${reporteActual}_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    URL.revokeObjectURL(url);
+    limpiarAviso();
+}
+
+document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => cambiarReporte(btn.dataset.report)));
+$("applyFilters").addEventListener("click", renderizarReporte);
+$("clearFilters").addEventListener("click", () => {
+    $("searchInput").value = "";
+    $("dateFrom").value = "";
+    $("dateTo").value = "";
+    $("statusFilter").value = "";
+    limpiarAviso();
+    renderizarReporte();
+});
+$("searchInput").addEventListener("input", renderizarReporte);
+$("statusFilter").addEventListener("change", renderizarReporte);
+$("refreshBtn").addEventListener("click", cargarDatos);
+$("printBtn").addEventListener("click", () => window.print());
+$("exportBtn").addEventListener("click", exportarCSV);
+$("closeModal").addEventListener("click", () => $("detailModal").classList.remove("show"));
+$("detailModal").addEventListener("click", event => {
+    if (event.target === $("detailModal")) $("detailModal").classList.remove("show");
+});
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") $("detailModal").classList.remove("show");
+});
+
+cambiarReporte("ventas");
+cargarDatos();
+</script>
+</body>
+</html>

@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestión de Productos - Pharmatodo</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7fb;
+            color: #34495e;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 75px;
+            background: linear-gradient(90deg, #8fa7c2, #6f8fb5);
+            display: flex;
+            align-items: center;
+            padding: 0 35px;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-right: 45px;
+        }
+
+        .logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .logo-text {
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.75;
+        }
+
+        .nav-links a.active {
+            font-weight: 600;
+            border-bottom: 2px solid white;
+            padding-bottom: 4px;
+        }
+
+        .container {
+            padding: 35px 45px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin-top: 5px;
+            color: #7b8794;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #6f8fb5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #5f7fa5;
+            transform: translateY(-1px);
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .summary-title {
+            color: #7b8794;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            color: #34495e;
+            font-size: 27px;
+            font-weight: 600;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .filters-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .filters-card h3 {
+            color: #34495e;
+            font-size: 17px;
+            margin-bottom: 18px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box span {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8d99a6;
+            font-size: 14px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 11px 12px 11px 36px;
+            border: 1px solid #d7dee7;
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+            font-size: 12px;
+            color: #34495e;
+        }
+
+        .search-box input:focus {
+            border-color: #6f8fb5;
+            box-shadow: 0 0 0 3px rgba(111, 143, 181, 0.10);
+        }
+
+        .filter-group {
+            margin-bottom: 17px;
+        }
+
+        .filter-group label {
+            display: block;
+            color: #536273;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 7px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px 11px;
+            border: 1px solid #d7dee7;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            color: #536273;
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #6f8fb5;
+        }
+
+        .btn-filter-clear {
+            width: 100%;
+            padding: 10px;
+            background: #edf1f5;
+            color: #526171;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .btn-filter-clear:hover {
+            background: #e1e7ed;
+        }
+
+        .products-section {
+            min-width: 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .counter {
+            color: #7b8794;
+            font-size: 13px;
+        }
+
+        .products-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.09);
+        }
+
+        .product-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 17px;
+            color: #34495e;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .product-data {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(130px, 1fr));
+            gap: 7px 25px;
+        }
+
+        .product-data span {
+            color: #7b8794;
+            font-size: 12px;
+        }
+
+        .product-data strong {
+            color: #526171;
+            font-weight: 500;
+        }
+
+        .product-side {
+            text-align: right;
+            min-width: 130px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .status-ok {
+            background: #e5f6ed;
+            color: #238b58;
+        }
+
+        .status-low {
+            background: #fff4d9;
+            color: #a97900;
+        }
+
+        .status-empty {
+            background: #fde7e7;
+            color: #c0392b;
+        }
+
+        .product-type {
+            color: #8a96a3;
+            font-size: 12px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #edf1f5;
+        }
+
+        .btn-action {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-view {
+            background: #eaf1f8;
+            color: #52769a;
+        }
+
+        .btn-edit {
+            background: #fff3dc;
+            color: #a36f00;
+        }
+
+        .btn-delete {
+            background: #fde8e8;
+            color: #bd3e3e;
+        }
+
+        .message {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            text-align: center;
+            color: #7b8794;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+            font-size: 13px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(30, 40, 50, 0.45);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            color: #34495e;
+            font-size: 21px;
+            font-weight: 600;
+        }
+
+        .close {
+            border: none;
+            background: transparent;
+            font-size: 25px;
+            cursor: pointer;
+            color: #7b8794;
+        }
+
+        .close:hover {
+            color: #34495e;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf1f5;
+            font-size: 13px;
+        }
+
+        .detail-row strong {
+            color: #536273;
+            font-weight: 500;
+        }
+
+        .detail-row span {
+            color: #34495e;
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #536273;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #d7dee7;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            color: #34495e;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #6f8fb5;
+            box-shadow: 0 0 0 3px rgba(111, 143, 181, 0.10);
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .btn-secondary {
+            background: #edf1f5;
+            color: #526171;
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .btn-save {
+            background: #6f8fb5;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .btn-save:hover {
+            background: #5f7fa5;
+        }
+
+        .form-message {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+            min-height: 18px;
+        }
+
+        @media (max-width: 1050px) {
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .logo-container {
+                margin-right: 20px;
+            }
+
+            .main-grid {
+                grid-template-columns: 240px 1fr;
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-card {
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 25px 18px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .product-top {
+                flex-direction: column;
+            }
+
+            .product-side {
+                text-align: left;
+            }
+
+            .product-data {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo-container">
+
+        <img
+            src="img/LogoPharmatodo.jpeg"
+            alt="Logo Pharmatodo"
+            class="logo"
+        >
+
+        <span class="logo-text">Pharmatodo</span>
+
+    </div>
+
+    <div class="nav-links">
+        <a href="Dashboard.html">Inicio</a>
+        <a href="Gestiondeproductos.html" class="active">Productos</a>
+        <a href="Inventario.html">Inventario</a>
+        <a href="Ventas.html">Ventas</a>
+        <a href="Proveedores.html">Proveedores</a>
+        <a href="Reportes.html">Reportes</a>
+        <a href="Usuarios.html">Usuarios</a>
+        <a href="Configuracion.html">Configuración</a>
+    </div>
+
+</nav>
+
+<main class="container">
+
+    <div class="header">
+
+        <div>
+
+            <h1>Gestión de Productos</h1>
+
+            <p>
+                Consulta, registra y administra los medicamentos de Pharmatodo.
+            </p>
+
+        </div>
+
+        <button
+            class="btn-primary"
+            onclick="abrirModalAgregar()"
+        >
+            + Registrar producto
+        </button>
+
+    </div>
+
+    <section class="summary">
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                Productos registrados
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalProductos"
+            >
+                0
+            </div>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                Productos disponibles
+            </div>
+
+            <div
+                class="summary-value"
+                id="productosDisponibles"
+            >
+                0
+            </div>
+
+        </div>
+
+        <div class="summary-card">
+
+            <div class="summary-title">
+                Productos sin stock
+            </div>
+
+            <div
+                class="summary-value"
+                id="productosAgotados"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="main-grid">
+
+        <aside class="filters-card">
+
+            <h3>Buscar y filtrar</h3>
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="buscador"
+                    placeholder="Buscar producto..."
+                    oninput="aplicarFiltros()"
+                >
+
+            </div>
+
+            <div class="filter-group">
+
+                <label for="filtro-tipo">
+                    Tipo de medicamento
+                </label>
+
+                <select
+                    id="filtro-tipo"
+                    onchange="aplicarFiltros()"
+                >
+                    <option value="">Todos</option>
+                </select>
+
+            </div>
+
+            <div class="filter-group">
+
+                <label for="filtro-stock">
+                    Estado del stock
+                </label>
+
+                <select
+                    id="filtro-stock"
+                    onchange="aplicarFiltros()"
+                >
+                    <option value="">Todos</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="bajo">Bajo stock</option>
+                    <option value="agotado">Sin stock</option>
+                </select>
+
+            </div>
+
+            <div class="filter-group">
+
+                <label for="filtro-vencimiento">
+                    Vencimiento
+                </label>
+
+                <select
+                    id="filtro-vencimiento"
+                    onchange="aplicarFiltros()"
+                >
+                    <option value="">Todos</option>
+                    <option value="vigente">Vigentes</option>
+                    <option value="proximo">
+                        Próximos a vencer
+                    </option>
+                    <option value="vencido">
+                        Vencidos
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="filter-group">
+
+                <label for="ordenar">
+                    Ordenar por
+                </label>
+
+                <select
+                    id="ordenar"
+                    onchange="aplicarFiltros()"
+                >
+                    <option value="">
+                        Predeterminado
+                    </option>
+
+                    <option value="nombre-asc">
+                        Nombre A-Z
+                    </option>
+
+                    <option value="nombre-desc">
+                        Nombre Z-A
+                    </option>
+
+                    <option value="precio-asc">
+                        Precio menor a mayor
+                    </option>
+
+                    <option value="precio-desc">
+                        Precio mayor a menor
+                    </option>
+
+                    <option value="stock-asc">
+                        Stock menor a mayor
+                    </option>
+
+                    <option value="stock-desc">
+                        Stock mayor a menor
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button
+                class="btn-filter-clear"
+                onclick="limpiarFiltros()"
+            >
+                Limpiar filtros
+            </button>
+
+        </aside>
+
+        <section class="products-section">
+
+            <div class="section-header">
+
+                <h2>
+                    Productos registrados
+                </h2>
+
+                <span
+                    class="counter"
+                    id="contadorProductos"
+                >
+                    0 productos
+                </span>
+
+            </div>
+
+            <div
+                id="lista-productos"
+                class="products-list"
+            ></div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<div
+    class="modal"
+    id="modalDetalles"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                Detalles del producto
+            </h2>
+
+            <button
+                class="close"
+                onclick="cerrarModal('modalDetalles')"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <div id="contenidoDetalles"></div>
+
+    </div>
+
+</div>
+
+<div
+    class="modal"
+    id="modalAgregar"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                Registrar producto
+            </h2>
+
+            <button
+                class="close"
+                onclick="cerrarModal('modalAgregar')"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <form
+            onsubmit="registrarProducto(event)"
+        >
+
+            <div class="form-group">
+
+                <label for="nuevoNombre">
+                    Nombre
+                </label>
+
+                <input
+                    type="text"
+                    id="nuevoNombre"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="nuevoTipo">
+                    Tipo
+                </label>
+
+                <input
+                    type="text"
+                    id="nuevoTipo"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="nuevoPrecio">
+                    Precio
+                </label>
+
+                <input
+                    type="number"
+                    id="nuevoPrecio"
+                    min="0"
+                    step="0.01"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="nuevoStock">
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="nuevoStock"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="nuevoVencimiento">
+                    Fecha de vencimiento
+                </label>
+
+                <input
+                    type="date"
+                    id="nuevoVencimiento"
+                    required
+                >
+
+            </div>
+
+            <div class="form-buttons">
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    onclick="cerrarModal('modalAgregar')"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-save"
+                >
+                    Registrar producto
+                </button>
+
+            </div>
+
+            <div
+                id="mensajeAgregar"
+                class="form-message"
+            ></div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+
+const API_URL =
+    "http://localhost:3000/api/medicamentos";
+
+const ACTUALIZACION_URL =
+    "Actualizaciondeproductos.html";
+
+let productos = [];
+
+async function cargarProductos() {
+
+    const lista =
+        document.getElementById("lista-productos");
+
+    lista.innerHTML = `
+        <div class="message">
+            Cargando productos...
+        </div>
+    `;
+
+    try {
+
+        const respuesta =
+            await fetch(API_URL);
+
+        if (!respuesta.ok) {
+            throw new Error(
+                "No se pudieron consultar los productos"
+            );
+        }
+
+        productos =
+            await respuesta.json();
+
+        cargarTipos();
+
+        actualizarResumen();
+
+        mostrarProductos(productos);
+
+    } catch (error) {
+
+        console.error(error);
+
+        lista.innerHTML = `
+            <div class="message">
+                No fue posible cargar los productos.
+            </div>
+        `;
+
+    }
+
+}
+
+function actualizarResumen() {
+
+    const total =
+        productos.length;
+
+    const disponibles =
+        productos.filter(
+            producto => Number(producto.STOCK) > 10
+        ).length;
+
+    const agotados =
+        productos.filter(
+            producto => Number(producto.STOCK) === 0
+        ).length;
+
+    document.getElementById(
+        "totalProductos"
+    ).textContent = total;
+
+    document.getElementById(
+        "productosDisponibles"
+    ).textContent = disponibles;
+
+    document.getElementById(
+        "productosAgotados"
+    ).textContent = agotados;
+
+}
+
+function mostrarProductos(listaProductos) {
+
+    const lista =
+        document.getElementById("lista-productos");
+
+    const contador =
+        document.getElementById("contadorProductos");
+
+    lista.innerHTML = "";
+
+    contador.textContent =
+        `${listaProductos.length} producto${listaProductos.length === 1 ? "" : "s"}`;
+
+    if (listaProductos.length === 0) {
+
+        lista.innerHTML = `
+            <div class="message">
+                No se encontraron productos.
+            </div>
+        `;
+
+        return;
+    }
+
+    listaProductos.forEach(producto => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "product-card";
+
+        const stock =
+            Number(producto.STOCK);
+
+        let claseEstado =
+            "status-ok";
+
+        let textoEstado =
+            "Disponible";
+
+        if (stock === 0) {
+
+            claseEstado =
+                "status-empty";
+
+            textoEstado =
+                "Agotado";
+
+        } else if (stock <= 10) {
+
+            claseEstado =
+                "status-low";
+
+            textoEstado =
+                "Stock bajo";
+
+        }
+
+        card.innerHTML = `
+
+            <div class="product-top">
+
+                <div class="product-info">
+
+                    <div class="product-name">
+                        ${producto.NOMBRE}
+                    </div>
+
+                    <div class="product-data">
+
+                        <span>
+                            <strong>ID:</strong>
+                            ${producto.ID}
+                        </span>
+
+                        <span>
+                            <strong>Tipo:</strong>
+                            ${producto.TIPO}
+                        </span>
+
+                        <span>
+                            <strong>Stock:</strong>
+                            ${producto.STOCK} unidades
+                        </span>
+
+                        <span>
+                            <strong>Precio:</strong>
+                            $${Number(producto.PRECIO).toLocaleString("es-CO")}
+                        </span>
+
+                        <span>
+                            <strong>Vencimiento:</strong>
+                            ${formatearFecha(producto.FECHA_VENCIMIENTO)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="product-side">
+
+                    <span
+                        class="status ${claseEstado}"
+                    >
+                        ${textoEstado}
+                    </span>
+
+                    <div class="product-type">
+                        ${producto.TIPO}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="actions">
+
+                <button
+                    class="btn-action btn-view"
+                    onclick="verDetalles(${producto.ID})"
+                >
+                    Ver detalles
+                </button>
+
+                <button
+                    class="btn-action btn-edit"
+                    onclick="editarProducto(${producto.ID})"
+                >
+                    Editar
+                </button>
+
+                <button
+                    class="btn-action btn-delete"
+                    onclick="eliminarProducto(${producto.ID})"
+                >
+                    Eliminar
+                </button>
+
+            </div>
+
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+function aplicarFiltros() {
+
+    const texto =
+        document.getElementById("buscador")
+            .value
+            .toLowerCase()
+            .trim();
+
+    const tipo =
+        document.getElementById("filtro-tipo")
+            .value;
+
+    const stock =
+        document.getElementById("filtro-stock")
+            .value;
+
+    const vencimiento =
+        document.getElementById("filtro-vencimiento")
+            .value;
+
+    const orden =
+        document.getElementById("ordenar")
+            .value;
+
+    let resultados =
+        productos.filter(producto => {
+
+            const coincideTexto =
+
+                String(producto.ID)
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                String(producto.NOMBRE)
+                    .toLowerCase()
+                    .includes(texto)
+
+                ||
+
+                String(producto.TIPO)
+                    .toLowerCase()
+                    .includes(texto);
+
+            const coincideTipo =
+                tipo === "" ||
+                producto.TIPO === tipo;
+
+            const cantidadStock =
+                Number(producto.STOCK);
+
+            let coincideStock =
+                true;
+
+            if (stock === "disponible") {
+
+                coincideStock =
+                    cantidadStock > 10;
+
+            }
+
+            if (stock === "bajo") {
+
+                coincideStock =
+                    cantidadStock > 0 &&
+                    cantidadStock <= 10;
+
+            }
+
+            if (stock === "agotado") {
+
+                coincideStock =
+                    cantidadStock === 0;
+
+            }
+
+            let coincideVencimiento =
+                true;
+
+            if (vencimiento !== "") {
+
+                const fecha =
+                    new Date(
+                        producto.FECHA_VENCIMIENTO
+                    );
+
+                const hoy =
+                    new Date();
+
+                const diferencia =
+                    (fecha - hoy) /
+                    (1000 * 60 * 60 * 24);
+
+                if (vencimiento === "vigente") {
+
+                    coincideVencimiento =
+                        diferencia > 30;
+
+                }
+
+                if (vencimiento === "proximo") {
+
+                    coincideVencimiento =
+                        diferencia >= 0 &&
+                        diferencia <= 30;
+
+                }
+
+                if (vencimiento === "vencido") {
+
+                    coincideVencimiento =
+                        diferencia < 0;
+
+                }
+
+            }
+
+            return (
+                coincideTexto &&
+                coincideTipo &&
+                coincideStock &&
+                coincideVencimiento
+            );
+
+        });
+
+    resultados.sort((a, b) => {
+
+        if (orden === "nombre-asc") {
+
+            return String(a.NOMBRE)
+                .localeCompare(
+                    String(b.NOMBRE)
+                );
+
+        }
+
+        if (orden === "nombre-desc") {
+
+            return String(b.NOMBRE)
+                .localeCompare(
+                    String(a.NOMBRE)
+                );
+
+        }
+
+        if (orden === "precio-asc") {
+
+            return Number(a.PRECIO) -
+                   Number(b.PRECIO);
+
+        }
+
+        if (orden === "precio-desc") {
+
+            return Number(b.PRECIO) -
+                   Number(a.PRECIO);
+
+        }
+
+        if (orden === "stock-asc") {
+
+            return Number(a.STOCK) -
+                   Number(b.STOCK);
+
+        }
+
+        if (orden === "stock-desc") {
+
+            return Number(b.STOCK) -
+                   Number(a.STOCK);
+
+        }
+
+        return 0;
+
+    });
+
+    mostrarProductos(resultados);
+
+}
+
+function limpiarFiltros() {
+
+    document.getElementById(
+        "buscador"
+    ).value = "";
+
+    document.getElementById(
+        "filtro-tipo"
+    ).value = "";
+
+    document.getElementById(
+        "filtro-stock"
+    ).value = "";
+
+    document.getElementById(
+        "filtro-vencimiento"
+    ).value = "";
+
+    document.getElementById(
+        "ordenar"
+    ).value = "";
+
+    mostrarProductos(productos);
+
+}
+
+function cargarTipos() {
+
+    const select =
+        document.getElementById(
+            "filtro-tipo"
+        );
+
+    select.innerHTML =
+        '<option value="">Todos</option>';
+
+    const tipos = [
+
+        ...new Set(
+
+            productos
+                .map(producto => producto.TIPO)
+                .filter(tipo => tipo)
+
+        )
+
+    ];
+
+    tipos.sort(
+        (a, b) =>
+            String(a).localeCompare(
+                String(b)
+            )
+    );
+
+    tipos.forEach(tipo => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            tipo;
+
+        option.textContent =
+            tipo;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+function verDetalles(id) {
+
+    const producto =
+        productos.find(
+            producto =>
+                Number(producto.ID) ===
+                Number(id)
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    const contenido =
+        document.getElementById(
+            "contenidoDetalles"
+        );
+
+    contenido.innerHTML = `
+
+        <div class="detail-row">
+            <strong>Nombre</strong>
+            <span>${producto.NOMBRE}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>ID</strong>
+            <span>${producto.ID}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Tipo</strong>
+            <span>${producto.TIPO}</span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Precio</strong>
+            <span>
+                $${Number(producto.PRECIO).toLocaleString("es-CO")}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Stock</strong>
+            <span>
+                ${producto.STOCK} unidades
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Fecha de vencimiento</strong>
+            <span>
+                ${formatearFecha(producto.FECHA_VENCIMIENTO)}
+            </span>
+        </div>
+
+    `;
+
+    document.getElementById(
+        "modalDetalles"
+    ).style.display = "flex";
+
+}
+
+function abrirModalAgregar() {
+
+    document.getElementById(
+        "modalAgregar"
+    ).style.display = "flex";
+
+}
+
+function cerrarModal(id) {
+
+    document.getElementById(
+        id
+    ).style.display = "none";
+
+}
+
+async function registrarProducto(event) {
+
+    event.preventDefault();
+
+    const mensaje =
+        document.getElementById(
+            "mensajeAgregar"
+        );
+
+    const nuevoProducto = {
+
+        NOMBRE:
+            document.getElementById(
+                "nuevoNombre"
+            ).value.trim(),
+
+        TIPO:
+            document.getElementById(
+                "nuevoTipo"
+            ).value.trim(),
+
+        PRECIO:
+            Number(
+                document.getElementById(
+                    "nuevoPrecio"
+                ).value
+            ),
+
+        STOCK:
+            Number(
+                document.getElementById(
+                    "nuevoStock"
+                ).value
+            ),
+
+        FECHA_VENCIMIENTO:
+            document.getElementById(
+                "nuevoVencimiento"
+            ).value
+
+    };
+
+    try {
+
+        const respuesta =
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            nuevoProducto
+                        )
+                }
+            );
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                "No se pudo registrar el producto"
+            );
+
+        }
+
+        mensaje.textContent =
+            "Producto registrado correctamente.";
+
+        mensaje.style.color =
+            "#238b58";
+
+        event.target.reset();
+
+        setTimeout(() => {
+
+            cerrarModal(
+                "modalAgregar"
+            );
+
+            cargarProductos();
+
+            mensaje.textContent = "";
+
+        }, 1000);
+
+    } catch (error) {
+
+        console.error(error);
+
+        mensaje.textContent =
+            "No fue posible registrar el producto.";
+
+        mensaje.style.color =
+            "#bd3e3e";
+
+    }
+
+}
+
+function editarProducto(id) {
+
+    window.location.href =
+        `${ACTUALIZACION_URL}?id=${id}`;
+
+}
+
+async function eliminarProducto(id) {
+
+    const producto =
+        productos.find(
+            producto =>
+                Number(producto.ID) ===
+                Number(id)
+        );
+
+    if (!producto) {
+        return;
+    }
+
+    const confirmar =
+        confirm(
+            `¿Está seguro de eliminar el producto "${producto.NOMBRE}"?`
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `${API_URL}/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+        const datos = await respuesta.json().catch(() => ({}));
+
+        if (!respuesta.ok) {
+            throw new Error(
+                datos.mensaje || "No se pudo eliminar el producto"
+            );
+        }
+
+        alert(
+            datos.mensaje || "Producto eliminado correctamente."
+        );
+
+        cargarProductos();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            error.message || "No fue posible eliminar el producto."
+        );
+
+    }
+
+}
+
+function formatearFecha(fecha) {
+
+    if (!fecha) {
+        return "No registrada";
+    }
+
+    const fechaObjeto =
+        new Date(fecha);
+
+    if (isNaN(fechaObjeto)) {
+        return fecha;
+    }
+
+    return fechaObjeto.toLocaleDateString(
+        "es-CO"
+    );
+
+}
+
+window.onclick = function(event) {
+
+    const modalDetalles =
+        document.getElementById(
+            "modalDetalles"
+        );
+
+    const modalAgregar =
+        document.getElementById(
+            "modalAgregar"
+        );
+
+    if (
+        event.target ===
+        modalDetalles
+    ) {
+
+        cerrarModal(
+            "modalDetalles"
+        );
+
+    }
+
+    if (
+        event.target ===
+        modalAgregar
+    ) {
+
+        cerrarModal(
+            "modalAgregar"
+        );
+
+    }
+
+};
+
+cargarProductos();
+
+</script>
+
+</body>
+</html>
